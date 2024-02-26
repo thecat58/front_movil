@@ -11,6 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp( // Elimina el constante para MaterialApp
+      debugShowCheckedModeBanner: false, // Oculta la marca de depuración
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Instagram Menu Inferior'), // Añade un AppBar
@@ -23,3 +24,25 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
+
+// widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("Perfil de Usuario"),
+//         leading: CircleAvatar(
+//           backgroundImage: AssetImage('assets/profile_image.jpg'),
+//           radius: 20,
+//         ),
+//         actions: [
+//           IconButton(
+//             icon: Icon(Icons.arrow_back),
+//             onPressed: () {
+//               Navigator.pushReplacement(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => MainApp()),
+//               );
+//             },
+//           ),
+//         ],
+//       ),

@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:movil/pages/login.dart';
 
 class RejisterScreen extends StatelessWidget {
   const RejisterScreen({super.key});
@@ -9,15 +12,15 @@ class RejisterScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Login"),
       ),
-      body: cuerpo(),
+      body: cuerpo(context),
     );
   }
 
-  Widget cuerpo() {
+  Widget cuerpo( BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage("assets/rejister.jpg"), fit: BoxFit.cover)),
+              image: NetworkImage("assets/registro.jpg"), fit: BoxFit.cover)),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +30,7 @@ class RejisterScreen extends StatelessWidget {
             campoUcorreo(),
             campoJenero(),
             campoPassword(),
-            botonEntrar()
+            botonEntrar(context)
           ],
         ),
       ),
@@ -87,16 +90,24 @@ class RejisterScreen extends StatelessWidget {
         ));
   }
 
-  Widget botonEntrar() {
-    return TextButton(
-      onPressed: () {},
+  Widget botonEntrar(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: TextButton(
+        onPressed: () {
+          // Navega a la pantalla del perfil al presionar el botón
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+          );
+        },
       style: TextButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor: Colors.teal,
         padding: const EdgeInsets.all(16.0),
         textStyle: const TextStyle(fontSize: 20),
       ),
-      child: const Text("Rejistrate"),
-    );
+      child: Text("Rejistrate"),
+    ));
   }
 }
