@@ -5,47 +5,37 @@ import 'package:movil/pages/taller/vista_taller.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+  _CustomBottomNavigationBarState createState() =>
+      _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int _selectedIndex = 0;
 
-  // Lista de rutas
-  final List<String> _pageRoutes = [
-    '/home',
-    '/search',
-    '/add',
-    '/login',
+  final List<Widget> _pages = [
+    Container(color: Colors.white24), // Placeholder para la página de inicio
+    Container(color: Colors.blue), // Placeholder para la página de búsqueda
+    Container(color: Colors.green), // Placeholder para la página de agregar
+    LoginScreen(), // Página de inicio de sesión
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    
-    // Si la opción seleccionada es la de login, navega a la ruta '/login'
-    if (_pageRoutes[index] == '/login') {
-      navigateToRoute(_pageRoutes[index]);
-    }
-  }
-
-  void navigateToRoute(String route) {
-    // Utiliza Navigator.pushNamed para navegar a la ruta especificada
-    Navigator.pushNamed(context, route);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
+      backgroundColor: Colors.white, // Cambia el color de fondo del Scaffold
+      body: Stack(
         children: [
           // Aquí deberías tener tus diferentes páginas representadas por los índices
           // Por ejemplo, HomePage(), SearchPage(), AddPage(), etc.
           Container(color: Colors.red), // Ejemplo de página de inicio
-          Buscador(), // Ejemplo de página de búsqueda
-          VistaTaller(),
+          Container(color: Colors.blue), // Ejemplo de página de búsqueda
+          Container(color: Colors.green), // Ejemplo de página de agregar
           LoginScreen(), // Página de inicio de sesión
         ],
       ),

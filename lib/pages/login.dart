@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/perfil.dart';
+import 'package:movil/pages/rejister.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
-      body: cuerpo(),
+      body: cuerpo(context),
     );
   }
 
-  Widget cuerpo() {
+  Widget cuerpo(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -25,68 +26,65 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         Container(
-          color: Color.fromARGB(255, 188, 187, 187)
-              .withOpacity(0.5), // Ajusta la opacidad según sea necesario
+          color: Color.fromARGB(255, 188, 187, 187).withOpacity(0.5),
         ),
         Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                logo(),
-                SizedBox(height: 20), // Espacio entre el logo y los demás widgets
-                nombre(),
-                campoUsuario(),
-                campoPassword(),
-                botonEntrar(),
-                botonEntrar2(),
-                SizedBox(height: 20),
-                // Botones de registro con Facebook y Google
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // Acción al presionar el botón de registro con Facebook
-                      },
-                      icon: Icon(
-                        Icons.facebook,
-                        size: 50, // Tamaño del icono de Facebook
-                        color: Colors.blue, // Color del icono de Facebook
-                      ),
-                      label: Text(""),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              logo(),
+              SizedBox(height: 20),
+              nombre(),
+              campoUsuario(),
+              campoPassword(),
+              botonEntrar(context),
+              botonEntrar2(context),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Acción al presionar el botón de registro con Facebook
+                    },
+                    icon: Icon(
+                      Icons.facebook,
+                      size: 50,
+                      color: Colors.blue,
                     ),
-                    SizedBox(width: 20), // Espacio entre los botones
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // Acción al presionar el botón de registro con Google
-                      },
-                      icon: Icon(
-                        Icons.g_mobiledata,
-                        size: 50, // Tamaño del icono de Google
-                        color: Colors.red, // Color del icono de Google
-                      ),
-                      label: Text(""),
+                    label: Text(""),
+                  ),
+                  SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Acción al presionar el botón de registro con Google
+                    },
+                    icon: Icon(
+                      Icons.g_mobiledata,
+                      size: 50,
+                      color: Colors.red,
                     ),
-                  ],
-                ),
-              ],
-            ),
+                    label: Text(""),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 
-
   Widget logo() {
-   return Positioned(
-      top: 20, // Ajusta la ubicación vertical del logo
+    return Positioned(
+      top: 20,
       child: Container(
-        width: 200, // Ajusta el tamaño del logo según sea necesario
-        height: 200, // Ajusta el tamaño del logo según sea necesario
+        width: 200,
+        height: 200,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(60), // Añade el radio del borde de 50
+          borderRadius: BorderRadius.circular(60),
           image: DecorationImage(
-            image: AssetImage("assets/logo.png"), // Cambia por la ruta de tu imagen en el directorio de activos
+            image: AssetImage("logo.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -95,82 +93,84 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget nombre() {
-    return Text("Iniciar secion ",
+    return Text("Iniciar sesión ",
         style: TextStyle(
             color: Colors.white, fontSize: 35.0, fontWeight: FontWeight.bold));
   }
-Widget campoUsuario() {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: "Usuario",
-        fillColor: Colors.white,
-        suffixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.symmetric(vertical: 15), // Aumenta el padding vertical para centrar el texto
-        alignLabelWithHint: true, // Centra el texto del campo
-      ),
-    ),
-  );
-}
 
-
-
-Widget campoPassword() {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    child: TextField(
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: "Contraseña",
-        fillColor: Colors.white,
-        suffixIcon: Icon(Icons.no_encryption_sharp),
-        contentPadding: EdgeInsets.symmetric(vertical: 15), // Aumenta el padding vertical para centrar el texto
-      ),
-    ),
-  );
-}
-
-
-Widget botonEntrar() {
-  return Container(
-    margin: EdgeInsets.only(top: 20), // Ajusta la ubicación vertical del botón
-    child: TextButton(
-      onPressed: () {},
-      style: TextButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: Color(0xFF3E485D), // Color de fondo personalizado
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20), // Ajusta el padding horizontal
-        textStyle: const TextStyle(fontSize: 20),
-      ),
-      child: Text("               Iniciar              "),
-    ),
-  );
-}
-
-  Widget botonEntrar2() {
-    return TextButton(
-      onPressed: () {
-        // Acción a realizar cuando se presione el botón de registro
-      },
-      style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        // backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          EdgeInsets.symmetric(
-              vertical: 16.0,
-              horizontal: 29.0), // Ajusta los valores según tus preferencias
+  Widget campoUsuario() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: "Usuario",
+          fillColor: Colors.white,
+          suffixIcon: Icon(Icons.person),
+          contentPadding: EdgeInsets.symmetric(vertical: 15),
+          alignLabelWithHint: true,
         ),
-        textStyle: MaterialStateProperty.all<TextStyle>(
-          TextStyle(fontSize: 20),
-        ),
-        // Añade más propiedades de estilo aquí según tus necesidades
       ),
-      child: Text("REGISTRATE"),
     );
   }
 
+  Widget campoPassword() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: TextField(
+        obscureText: true,
+        decoration: InputDecoration(
+          hintText: "Contraseña",
+          fillColor: Colors.white,
+          suffixIcon: Icon(Icons.no_encryption_sharp),
+          contentPadding: EdgeInsets.symmetric(vertical: 15),
+        ),
+      ),
+    );
+  }
 
+  Widget botonEntrar(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: TextButton(
+        onPressed: () {
+          // Navega a la pantalla del perfil al presionar el botón
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => UserProfile()),
+          );
+        },
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Color(0xFF3E485D),
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          textStyle: const TextStyle(fontSize: 20),
+        ),
+        child: Text("Iniciar"),
+      ),
+    );
+  }
 
-
+  Widget botonEntrar2(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(top: 20),
+        child: TextButton(
+          onPressed: () {
+            // Navega a la pantalla del perfil al presionar el botón
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => RejisterScreen()),
+            );
+          },
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(vertical: 16.0, horizontal: 29.0),
+            ),
+            textStyle: MaterialStateProperty.all<TextStyle>(
+              TextStyle(fontSize: 20),
+            ),
+          ),
+          child: Text("REGISTRATE"),
+        ));
+  }
 }
