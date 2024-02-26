@@ -11,6 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp( // Elimina el constante para MaterialApp
+      debugShowCheckedModeBanner: false, // Oculta la marca de depuración
       home: Scaffold(
         appBar: AppBar(
           title: Text('Instagram Menu Inferior'), // Añade un AppBar

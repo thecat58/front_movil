@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movil/pages/login.dart';
+import 'package:movil/pages/taller/buscador.dart';
+import 'package:movil/pages/taller/vista_taller.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   @override
@@ -42,8 +44,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           // Aquí deberías tener tus diferentes páginas representadas por los índices
           // Por ejemplo, HomePage(), SearchPage(), AddPage(), etc.
           Container(color: Colors.red), // Ejemplo de página de inicio
-          Container(color: Colors.blue), // Ejemplo de página de búsqueda
-          Container(color: Colors.green), // Ejemplo de página de agregar
+          Buscador(), // Ejemplo de página de búsqueda
+          VistaTaller(),
           LoginScreen(), // Página de inicio de sesión
         ],
       ),
