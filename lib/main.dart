@@ -23,3 +23,25 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
+
+// widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("Perfil de Usuario"),
+//         leading: CircleAvatar(
+//           backgroundImage: AssetImage('assets/profile_image.jpg'),
+//           radius: 20,
+//         ),
+//         actions: [
+//           IconButton(
+//             icon: Icon(Icons.arrow_back),
+//             onPressed: () {
+//               Navigator.pushReplacement(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => MainApp()),
+//               );
+//             },
+//           ),
+//         ],
+//       ),
