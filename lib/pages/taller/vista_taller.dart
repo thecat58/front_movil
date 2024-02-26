@@ -63,8 +63,3 @@ class TarjetaTaller extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: VistaTaller(),
-  ));
-}

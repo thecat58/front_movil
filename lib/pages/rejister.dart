@@ -1,10 +1,8 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:movil/pages/login.dart';
 
 class RejisterScreen extends StatelessWidget {
-  const RejisterScreen({super.key});
+  const RejisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +14,7 @@ class RejisterScreen extends StatelessWidget {
     );
   }
 
-  Widget cuerpo( BuildContext context) {
+  Widget cuerpo(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
