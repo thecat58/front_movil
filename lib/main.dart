@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movil/pages/nav.dart'; // Asegúrate de importar el archivo donde se define CustomBottomNavigationBar
 
 void main() {
-  runApp(MainApp()); // No es necesario el constante para MainApp
+  runApp(const MainApp()); // No es necesario el constante para MainApp
 }
 
 class MainApp extends StatelessWidget {
@@ -13,12 +13,12 @@ class MainApp extends StatelessWidget {
     return MaterialApp( // Elimina el constante para MaterialApp
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Instagram Menu Inferior'), // Añade un AppBar
+          title: const Text('Instagram Menu Inferior'), // Añade un AppBar
         ),
-        body: Center(
+        body: const Center(
           child: Text('Hello World!'),
         ),
-        bottomNavigationBar: CustomBottomNavigationBar(), // Llamada al menú inferior personalizado
+        bottomNavigationBar: const CustomBottomNavigationBar(), // Llamada al menú inferior personalizado
       ),
     );
   }

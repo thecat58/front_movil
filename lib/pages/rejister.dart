@@ -7,7 +7,7 @@ class RejisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
       ),
       body: cuerpo(),
     );
@@ -15,7 +15,7 @@ class RejisterScreen extends StatelessWidget {
 
   Widget cuerpo() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
               image: NetworkImage("assets/rejister.jpg"), fit: BoxFit.cover)),
       child: Center(
@@ -35,14 +35,14 @@ class RejisterScreen extends StatelessWidget {
   }
 
   Widget nombre() {
-    return Text("Rejistrate",
+    return const Text("Rejistrate",
         style: TextStyle(
             color: Colors.white, fontSize: 35.0, fontWeight: FontWeight.bold));
   }
 
   Widget campoUsuario() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: TextField(
           decoration: InputDecoration(
               border:
@@ -55,7 +55,7 @@ class RejisterScreen extends StatelessWidget {
 
   Widget campoJenero() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
         child: TextField(
           decoration: InputDecoration(
                           border:
@@ -66,7 +66,7 @@ class RejisterScreen extends StatelessWidget {
 
   Widget campoUcorreo() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
         child: TextField(
           decoration: InputDecoration(
                           border:
@@ -77,7 +77,7 @@ class RejisterScreen extends StatelessWidget {
 
   Widget campoPassword() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
         child: TextField(
           obscureText: true,
           decoration: InputDecoration(
@@ -96,7 +96,7 @@ class RejisterScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         textStyle: const TextStyle(fontSize: 20),
       ),
-      child: Text("Rejistrate"),
+      child: const Text("Rejistrate"),
     );
   }
 }

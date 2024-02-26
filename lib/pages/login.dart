@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
                 "assets/login.jpg",
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         Container(
-          color: Color.fromARGB(255, 188, 187, 187)
+          color: const Color.fromARGB(255, 188, 187, 187)
               .withOpacity(0.5), // Ajusta la opacidad según sea necesario
         ),
         Center(
@@ -33,13 +33,13 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 logo(),
-                SizedBox(height: 20), // Espacio entre el logo y los demás widgets
+                const SizedBox(height: 20), // Espacio entre el logo y los demás widgets
                 nombre(),
                 campoUsuario(),
                 campoPassword(),
                 botonEntrar(),
                 botonEntrar2(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // Botones de registro con Facebook y Google
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -48,24 +48,24 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         // Acción al presionar el botón de registro con Facebook
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.facebook,
                         size: 50, // Tamaño del icono de Facebook
                         color: Colors.blue, // Color del icono de Facebook
                       ),
-                      label: Text(""),
+                      label: const Text(""),
                     ),
-                    SizedBox(width: 20), // Espacio entre los botones
+                    const SizedBox(width: 20), // Espacio entre los botones
                     ElevatedButton.icon(
                       onPressed: () {
                         // Acción al presionar el botón de registro con Google
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.g_mobiledata,
                         size: 50, // Tamaño del icono de Google
                         color: Colors.red, // Color del icono de Google
                       ),
-                      label: Text(""),
+                      label: const Text(""),
                     ),
                   ],
                 ),
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
         height: 200, // Ajusta el tamaño del logo según sea necesario
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60), // Añade el radio del borde de 50
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage("assets/logo.png"), // Cambia por la ruta de tu imagen en el directorio de activos
             fit: BoxFit.cover,
           ),
@@ -95,14 +95,14 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget nombre() {
-    return Text("Iniciar secion ",
+    return const Text("Iniciar secion ",
         style: TextStyle(
             color: Colors.white, fontSize: 35.0, fontWeight: FontWeight.bold));
   }
 Widget campoUsuario() {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    child: TextField(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: const TextField(
       decoration: InputDecoration(
         hintText: "Usuario",
         fillColor: Colors.white,
@@ -118,8 +118,8 @@ Widget campoUsuario() {
 
 Widget campoPassword() {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    child: TextField(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: const TextField(
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Contraseña",
@@ -134,16 +134,16 @@ Widget campoPassword() {
 
 Widget botonEntrar() {
   return Container(
-    margin: EdgeInsets.only(top: 20), // Ajusta la ubicación vertical del botón
+    margin: const EdgeInsets.only(top: 20), // Ajusta la ubicación vertical del botón
     child: TextButton(
       onPressed: () {},
       style: TextButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Color(0xFF3E485D), // Color de fondo personalizado
+        backgroundColor: const Color(0xFF3E485D), // Color de fondo personalizado
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20), // Ajusta el padding horizontal
         textStyle: const TextStyle(fontSize: 20),
       ),
-      child: Text("               Iniciar              "),
+      child: const Text("               Iniciar              "),
     ),
   );
 }
@@ -157,16 +157,16 @@ Widget botonEntrar() {
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         // backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          EdgeInsets.symmetric(
+          const EdgeInsets.symmetric(
               vertical: 16.0,
               horizontal: 29.0), // Ajusta los valores según tus preferencias
         ),
         textStyle: MaterialStateProperty.all<TextStyle>(
-          TextStyle(fontSize: 20),
+          const TextStyle(fontSize: 20),
         ),
         // Añade más propiedades de estilo aquí según tus necesidades
       ),
-      child: Text("REGISTRATE"),
+      child: const Text("REGISTRATE"),
     );
   }
 

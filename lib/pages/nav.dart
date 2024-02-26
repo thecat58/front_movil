@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/home_screen.dart';
 import 'package:movil/pages/login.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
+  const CustomBottomNavigationBar({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
 }
 
@@ -22,16 +26,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       _selectedIndex = index;
     });
     
-    // Si la opción seleccionada es la de login, navega a la ruta '/login'
-    if (_pageRoutes[index] == '/login') {
-      navigateToRoute(_pageRoutes[index]);
-    }
+  
   }
 
-  void navigateToRoute(String route) {
-    // Utiliza Navigator.pushNamed para navegar a la ruta especificada
-    Navigator.pushNamed(context, route);
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +39,18 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         children: [
           // Aquí deberías tener tus diferentes páginas representadas por los índices
           // Por ejemplo, HomePage(), SearchPage(), AddPage(), etc.
-          Container(color: Colors.red), // Ejemplo de página de inicio
+          HomeScreen(), // Ejemplo de página de inicio
           Container(color: Colors.blue), // Ejemplo de página de búsqueda
           Container(color: Colors.green), // Ejemplo de página de agregar
-          LoginScreen(), // Página de inicio de sesión
+          const LoginScreen(), // Página de inicio de sesión
+          
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Inicio',
