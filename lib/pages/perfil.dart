@@ -42,7 +42,7 @@ class _UserProfile extends State<UserProfile> {
               height: 320, // Altura del contenedor
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('registro.jpg'), // Ruta de la imagen de fondo
+                  image: AssetImage('registro.png'), // Ruta de la imagen de fondo
                   fit: BoxFit.cover, // Ajustar la imagen para cubrir todo el contenedor
                 ),
                 borderRadius: BorderRadius.circular(10), // Borde redondeado del contenedor
@@ -71,7 +71,7 @@ class _UserProfile extends State<UserProfile> {
                             ),
                           ],
                         ),
-                        backgroundImage: AssetImage('logo.jpg'),
+                        backgroundImage: AssetImage('logo.png'),
                         radius: 49,
                       ),
                     ),

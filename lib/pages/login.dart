@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                "assets/login.jpg",
+                "login.png",
               ),
               fit: BoxFit.cover,
             ),
@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60),
           image: DecorationImage(
-            image: AssetImage("logo.jpg"),
+            image: AssetImage("logo.png"),
             fit: BoxFit.cover,
           ),
         ),

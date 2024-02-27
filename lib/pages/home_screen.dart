@@ -11,21 +11,21 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   final List<String> images = [
-    'imgprin1.jpg',
-    'imgprin2.jpg',
-    'imgprin3.jpg',
+    'imgprin1.png',
+    'imgprin2.png',
+    'imgprin3.png',
   ];
 
   final List<TallerInfo> talleres = [
-    TallerInfo('imgtarj1.jpg', 'Taller Eléctrico', 'Servicio de reparación eléctrica', 'Aceptamos todo tipo de vehículos'),
-    TallerInfo('imgtaj2.jpg', 'Taller Mecánico', 'Especialistas en reparación de carrocería', 'Trabajos rápidos y garantizados'),
-    TallerInfo('imgtarj3.jpg', 'Taller de Lamina y Pintura', 'Reparación y mantenimiento mecánico', 'Personal altamente capacitado'),
+    TallerInfo('imgtarj1.png', 'Taller Eléctrico', 'Servicio de reparación eléctrica', 'Aceptamos todo tipo de vehículos'),
+    TallerInfo('imgtaj2.png', 'Taller Mecánico', 'Especialistas en reparación de carrocería', 'Trabajos rápidos y garantizados'),
+    TallerInfo('imgtarj3.png', 'Taller de Lamina y Pintura', 'Reparación y mantenimiento mecánico', 'Personal altamente capacitado'),
   ];
 
   final List<String> secondCarouselImages = [
-    'imgcarro1.jpg',
-    'imgcarro2.jpg',
-    'imgcarro3.jpg',
+    'imgcarro1.png',
+    'imgcarro2.png',
+    'imgcarro3.png',
   ];
 
   @override
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              'logo.jpg',
+              'logo.png',
               width: 40,
               height: 40,
             ),
@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('imgoferta1.jpg'),
+                          image: AssetImage('imgoferta1.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -132,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       // Acción al tocar la tarjeta (puedes cambiar esto según tus necesidades)
-                      print('Tocaste la tarjeta ${taller.nombre}');
+
                     },
                     child: Container(
                       margin: const EdgeInsets.all(16),

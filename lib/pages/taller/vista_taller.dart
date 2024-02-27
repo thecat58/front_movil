@@ -12,11 +12,11 @@ class VistaTaller extends StatelessWidget {
         children: <Widget>[
           TarjetaTaller(
             nombre: 'Taller de Reparación de Autos',
-            imagenUrl: 'taller1.jpg',
+            imagenUrl: 'assets/taller2.png',
           ),
           TarjetaTaller(
             nombre: 'Taller de Reparación busetas',
-            imagenUrl: 'taller2.jpeg', 
+            imagenUrl: 'assets/taller2.png', 
           ),
           // Agrega más TarjetaTaller 
         ],
