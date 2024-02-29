@@ -1,44 +1,125 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/home_screen.dart';
 
 class VistaTaller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue, // Establecer el color de fondo del AppBar
-        centerTitle: true, // Centrar el título (en este caso, el logo)
+        backgroundColor: Color.fromARGB(255, 205, 82, 69),
+        centerTitle: true,
         title: Container(
-          padding: EdgeInsets.all(10.0), // Añadir espacio de relleno alrededor del logo
+          padding: EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0), // Añadir bordes redondeados al contenedor
-            color: Colors.blue, // Color de fondo del contenedor (coincide con el color del AppBar)
+            borderRadius: BorderRadius.circular(10.0),
           ),
           child: Image.asset(
-            'assets/logo.png', // Ruta de la imagen del logo de tu aplicación
-            width: 50, // Ancho deseado del logo
-            height: 50, // Alto deseado del logo
+            'assets/logo.png',
+            width: 50,
+            height: 50,
           ),
         ),
       ),
-      body: GridView.count(
-        crossAxisCount: 2, // Mostrar dos tarjetas por fila
-        padding: EdgeInsets.all(16.0),
-        children: <Widget>[
-          TarjetaTaller(
-            nombre: 'Taller de Reparación de Autos',
-            imagenUrl: 'assets/taller2.png',
-            width: 150,
-            height: 150,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: '',
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide(
+                    color: Color.fromARGB(255, 205, 82, 69),
+                    width: 2.0,
+                  ),
+                ),
+              ),
+            ),
           ),
-          TarjetaTaller(
-            nombre: 'Taller de Reparación de Motos',
-            imagenUrl: 'assets/taller1.png',
-            width: 150,
-            height: 150,
+          Expanded(
+            child: Stack(
+              children: [
+                GridView.count(
+                  crossAxisCount: 2,
+                  padding: EdgeInsets.all(16.0),
+                  children: <Widget>[
+                    TarjetaTaller(
+                      nombre: 'Taller de Reparación de Autos',
+                      imagenUrl: 'assets/taller2.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    TarjetaTaller(
+                      nombre: 'Taller de Reparación de Motos',
+                      imagenUrl: 'assets/taller1.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    TarjetaTaller(
+                      nombre: 'Taller de Reparación de Motos',
+                      imagenUrl: 'assets/taller1.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    TarjetaTaller(
+                      nombre: 'Taller de Reparación de Motos',
+                      imagenUrl: 'assets/taller1.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    TarjetaTaller(
+                      nombre: 'Taller de Reparación de Motos',
+                      imagenUrl: 'assets/taller1.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    TarjetaTaller(
+                      nombre: 'Taller de Reparación de Motos',
+                      imagenUrl: 'assets/taller1.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    // Puedes agregar más TarjetaTaller aquí
+                  ],
+                ),
+                Positioned(
+                  bottom: 80.0,
+                  right: 20.0,
+                  child: BotonFlotante(), // Aquí se inserta el botón flotante
+                ),
+              ],
+            ),
           ),
-          // Puedes agregar más TarjetaTaller aquí
         ],
       ),
+    );
+  }
+}
+
+// Clase del botón flotante
+class BotonFlotante extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Color.fromARGB(255, 205, 82, 69),
+      onPressed: () {
+        // Navegar a la nueva página al hacer clic en el botón flotante
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      },
+      child: Icon(Icons.add),
     );
   }
 }
