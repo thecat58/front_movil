@@ -57,8 +57,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   label: 'Inicio',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.brightness_7_outlined ),
-                  label: 'Agregar',
+                  icon: Icon(Icons.handyman_outlined  ),
+                  label: 'Talleres',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.account_circle),
