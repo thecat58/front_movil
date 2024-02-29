@@ -38,7 +38,6 @@ class LoginScreen extends StatelessWidget {
               campoUsuario(),
               campoPassword(),
               botonEntrar(context),
-              botonEntrar2(context),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +99,7 @@ class LoginScreen extends StatelessWidget {
 
   Widget campoUsuario() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
         decoration: InputDecoration(
           hintText: "Usuario",
@@ -150,27 +149,5 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget botonEntrar2(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: 20),
-        child: TextButton(
-          onPressed: () {
-            // Navega a la pantalla del perfil al presionar el botón
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RejisterScreen()),
-            );
-          },
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              EdgeInsets.symmetric(vertical: 16.0, horizontal: 29.0),
-            ),
-            textStyle: MaterialStateProperty.all<TextStyle>(
-              TextStyle(fontSize: 20),
-            ),
-          ),
-          child: Text("REGISTRATE"),
-        ));
-  }
+  
 }

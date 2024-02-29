@@ -33,21 +33,24 @@ class _UserProfile extends State<UserProfile> {
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),
-             child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // Contenedor para la imagen de fondo
-            Container(
-              width: 820, // Ancho del contenedor
-              height: 320, // Altura del contenedor
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('registro.png'), // Ruta de la imagen de fondo
-                  fit: BoxFit.cover, // Ajustar la imagen para cubrir todo el contenedor
-                ),
-                borderRadius: BorderRadius.circular(10), // Borde redondeado del contenedor
-              ),
-            ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Contenedor para la imagen de fondo
+                  Container(
+                    width: 820, // Ancho del contenedor
+                    height: 320, // Altura del contenedor
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'registro.png'), // Ruta de la imagen de fondo
+                        fit: BoxFit
+                            .cover, // Ajustar la imagen para cubrir todo el contenedor
+                      ),
+                      borderRadius: BorderRadius.circular(
+                          10), // Borde redondeado del contenedor
+                    ),
+                  ),
                   Container(
                     padding: const EdgeInsets.only(top: 130),
                     child: CircleAvatar(

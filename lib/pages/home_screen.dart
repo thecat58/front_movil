@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:movil/pages/taller/vista_ralle.dart';
+import 'package:movil/pages/taller/vista_taller.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -17,9 +19,15 @@ class HomeScreen extends StatelessWidget {
   ];
 
   final List<TallerInfo> talleres = [
-    TallerInfo('imgtarj1.png', 'Taller Eléctrico', 'Servicio de reparación eléctrica', 'Aceptamos todo tipo de vehículos'),
-    TallerInfo('imgtaj2.png', 'Taller Mecánico', 'Especialistas en reparación de carrocería', 'Trabajos rápidos y garantizados'),
-    TallerInfo('imgtarj3.png', 'Taller de Lamina y Pintura', 'Reparación y mantenimiento mecánico', 'Personal altamente capacitado'),
+    TallerInfo('imgtarj1.png', 'Taller Eléctrico',
+        'Servicio de reparación eléctrica', 'Aceptamos todo tipo de vehículos'),
+    TallerInfo(
+        'imgtaj2.png',
+        'Taller Mecánico',
+        'Especialistas en reparación de carrocería',
+        'Trabajos rápidos y garantizados'),
+    TallerInfo('imgtarj3.png', 'Taller de Lamina y Pintura',
+        'Reparación y mantenimiento mecánico', 'Personal altamente capacitado'),
   ];
 
   final List<String> secondCarouselImages = [
@@ -42,7 +50,6 @@ class HomeScreen extends StatelessWidget {
               width: 40,
               height: 40,
             ),
-            
           ),
         ),
       ),
@@ -116,7 +123,8 @@ class HomeScreen extends StatelessWidget {
                       child: const Center(
                         child: Text(
                           'Ofertas solo por 24 horas',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -131,8 +139,11 @@ class HomeScreen extends StatelessWidget {
                 children: talleres.map((taller) {
                   return InkWell(
                     onTap: () {
-                      // Acción al tocar la tarjeta (puedes cambiar esto según tus necesidades)
-
+                      // Cambiar la navegación directamente
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Vista_Taller()),
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.all(16),
