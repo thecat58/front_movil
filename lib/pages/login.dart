@@ -18,8 +18,8 @@ class LoginScreen extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(
-                "login.png",
+              image: AssetImage(
+                'assets/login.png',
               ),
               fit: BoxFit.cover,
             ),
@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60),
           image: DecorationImage(
-            image: AssetImage("logo.png"),
+            image: AssetImage('assets/logo.png'),
             fit: BoxFit.cover,
           ),
         ),

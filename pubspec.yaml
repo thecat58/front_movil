@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   go_router: ^13.2.0
   card_swiper: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.13
 
   
 
@@ -18,21 +20,25 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  
 
- flutter_launcher_icons: "^0.13.1"
 
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
-  
+
 flutter:
   uses-material-design: true
   assets:
     - assets/
 
+flutter_native_splash:
+  color: "#E74C3C"
+  image: assets/small_logo.png
+  color_dark: "#E74C3C"
+  image_dark: assets/small_logo.png
 
+  android_12:
+    color: "#E74C3C"
+    image: assets/small_logo.png
+    color_dark: "#E74C3C"
+    image_dark: assets/logo.png
+    icon_background_color_dark: '#121212'
 
-
+  web: false
