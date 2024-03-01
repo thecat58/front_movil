@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/nav.dart';
 import 'package:movil/pages/perfil.dart';
 import 'package:movil/pages/rejister.dart';
 
@@ -38,7 +39,6 @@ class LoginScreen extends StatelessWidget {
               campoUsuario(),
               campoPassword(),
               botonEntrar(context),
-              botonEntrar2(context),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +101,11 @@ class LoginScreen extends StatelessWidget {
   Widget campoUsuario() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      child: TextField(
+      alignment: Alignment.center,
+      child: Container(
+      width: 300,
+      child: TextField( 
+        style: TextStyle(fontSize: 25), // Ajusta el tamaño de la fuente aquí
         decoration: InputDecoration(
           hintText: "Usuario",
           fillColor: Colors.white,
@@ -110,14 +114,19 @@ class LoginScreen extends StatelessWidget {
           alignLabelWithHint: true,
         ),
       ),
+      )
     );
   }
 
-  Widget campoPassword() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+Widget campoPassword() {
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 10),
+    alignment: Alignment.center, // Centra el contenido del contenedor
+    child: Container(
+      width: 300, // Ancho deseado del TextField
       child: TextField(
         obscureText: true,
+        style: TextStyle(fontSize: 25), // Ajusta el tamaño de la fuente aquí
         decoration: InputDecoration(
           hintText: "Contraseña",
           fillColor: Colors.white,
@@ -125,18 +134,21 @@ class LoginScreen extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 15),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget botonEntrar(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: TextButton(
         onPressed: () {
-          // Navega a la pantalla del perfil al presionar el botón
+          // Navega a la página con el CustomBottomNavigationBar después de iniciar sesión
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => UserProfile()),
+            MaterialPageRoute(
+                builder: (context) => CustomBottomNavigationBar()),
           );
         },
         style: TextButton.styleFrom(
@@ -148,29 +160,5 @@ class LoginScreen extends StatelessWidget {
         child: Text("Iniciar"),
       ),
     );
-  }
-
-  Widget botonEntrar2(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: 20),
-        child: TextButton(
-          onPressed: () {
-            // Navega a la pantalla del perfil al presionar el botón
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RejisterScreen()),
-            );
-          },
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              EdgeInsets.symmetric(vertical: 16.0, horizontal: 29.0),
-            ),
-            textStyle: MaterialStateProperty.all<TextStyle>(
-              TextStyle(fontSize: 20),
-            ),
-          ),
-          child: Text("REGISTRATE"),
-        ));
   }
 }
