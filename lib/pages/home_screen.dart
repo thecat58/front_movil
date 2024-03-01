@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:movil/pages/taller/vista_ralle.dart';
+import 'package:movil/pages/taller/descripcion_ralle.dart';
 import 'package:movil/pages/taller/vista_taller.dart';
 
 void main() {
