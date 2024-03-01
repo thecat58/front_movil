@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movil/pages/home_screen.dart';
-import 'package:movil/pages/login.dart';
-import 'package:movil/pages/taller/buscador.dart';
+import 'package:movil/pages/maps_screen.dart';
+import 'package:movil/pages/perfil.dart';
+
 import 'package:movil/pages/taller/vista_taller.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -19,9 +20,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    Buscador(), // Placeholder para la página de búsqueda
-    VistaTaller(), // Placeholder para la página de agregar
-    LoginScreen(), // Página de inicio de sesión
+
+    VistaTaller(),
+    MapScreen(), // Placeholder para la página de agregar
+    UserProfile(), // Página de inicio de sesión
   ];
 
   void _onItemTapped(int index) {
@@ -57,12 +59,12 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   label: 'Inicio',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Buscar',
+                  icon: Icon(Icons.handyman_outlined  ),
+                  label: 'Talleres',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.add_box),
-                  label: 'Agregar',
+                 BottomNavigationBarItem(
+                  icon: Icon(Icons.map  ),
+                  label: 'Buscador',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.account_circle),

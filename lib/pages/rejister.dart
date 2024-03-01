@@ -18,7 +18,7 @@ class RejisterScreen extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage("assets/registro.jpg"), fit: BoxFit.cover)),
+              image: NetworkImage("registro.png"), fit: BoxFit.cover)),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
