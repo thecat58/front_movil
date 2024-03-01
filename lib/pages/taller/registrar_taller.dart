@@ -7,18 +7,13 @@ class SubirDatos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return MaterialApp( // Cambiado a MaterialApp para envolver Scaffold
+    debugShowCheckedModeBanner: false, // Oculta la marca de depuración
+
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 205, 82, 69),
           centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop(); // Devuelve la página hacia atrás
-            },
-          ),
           title: Column(
             children: [
               Container(
@@ -32,7 +27,7 @@ class SubirDatos extends StatelessWidget {
                   height: 50,
                 ),
               ),
-              SizedBox(height: 8.0),
+              SizedBox(height: 8.0), // Espacio entre el logo y el texto
             ],
           ),
         ),
