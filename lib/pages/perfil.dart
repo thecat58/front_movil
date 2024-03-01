@@ -34,7 +34,7 @@ class UserProfile extends StatelessWidget {
                   height: 200,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('registro.png'),
+                      image: AssetImage('assets/registro.png'),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -43,7 +43,7 @@ class UserProfile extends StatelessWidget {
                 CircleAvatar(
                   radius: 60,
                   backgroundColor: Colors.white,
-                  backgroundImage: AssetImage('logo.png'),
+                  backgroundImage: AssetImage('assets/logo.png'),
                 ),
               ],
             ),

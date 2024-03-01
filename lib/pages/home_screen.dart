@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:movil/pages/taller/descripcion_ralle.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -11,21 +12,27 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   final List<String> images = [
-    'imgprin1.jpg',
-    'imgprin2.jpg',
-    'imgprin3.jpg',
+    'assets/imgprin1.png',
+    'assets/imgprin2.png',
+    'assets/imgprin3.png',
   ];
 
   final List<TallerInfo> talleres = [
-    TallerInfo('imgtarj1.jpg', 'Servimec', 'Servicio de reparación eléctrica', 'Aceptamos todo tipo de vehículos'),
-    TallerInfo('imgtaj2.jpg', 'Reparauto', 'Especialistas en reparación de carrocería', 'Trabajos rápidos y garantizados'),
-    TallerInfo('imgtarj3.jpg', 'Mecatriz ', 'Reparación y mantenimiento mecánico', 'Personal altamente capacitado'),
+    TallerInfo('assets/imgtarj1.png', 'Servimec',
+        'Servicio de reparación eléctrica', 'Aceptamos todo tipo de vehículos'),
+    TallerInfo(
+        'assets/imgtaj2.png',
+        'Reparauto',
+        'Especialistas en reparación de carrocería',
+        'Trabajos rápidos y garantizados'),
+    TallerInfo('assets/imgtarj3.png', 'Mecatriz ',
+        'Reparación y mantenimiento mecánico', 'Personal altamente capacitado'),
   ];
 
   final List<String> secondCarouselImages = [
-    'imgcarro1.jpg',
-    'imgcarro2.jpg',
-    'imgcarro3.jpg',
+    'assets/imgcarro1.png',
+    'assets/imgcarro2.png',
+    'assets/imgcarro3.png',
   ];
 
   @override
@@ -39,7 +46,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
-                  'logo.jpg',
+                  'assets/logo.png',
                   width: 40,
                   height: 40,
                 ),
@@ -134,9 +141,12 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildSmallCard('imgcateg1.png', 'Mantenimiento general', Colors.red),
-                      _buildSmallCard('imgcateg2.jpg', 'Reparaciones Mecanicas', Colors.grey),
-                      _buildSmallCard('imgcateg3.png', 'Neumáticos y Ruedas', Colors.red),
+                      _buildSmallCard('assets/imgcateg1.png',
+                          'Mantenimiento general', Colors.red),
+                      _buildSmallCard('assets/imgcateg2.png',
+                          'Reparaciones Mecanicas', Colors.grey),
+                      _buildSmallCard('assets/imgcateg3.png',
+                          'Neumáticos y Ruedas', Colors.red),
                     ],
                   ),
                   Container(
@@ -147,7 +157,8 @@ class HomeScreen extends StatelessWidget {
                         print('Presionaste Ver Más');
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
                         shape: MaterialStateProperty.all<OutlinedBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -155,7 +166,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
                         child: Text(
                           'Ver Más',
                           style: TextStyle(
@@ -175,6 +187,11 @@ class HomeScreen extends StatelessWidget {
                 children: talleres.map((taller) {
                   return InkWell(
                     onTap: () {
+                      // Navega a la vista del taller cuando se toca la tarjeta
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Vista_Taller()),
+                      );
                       print('Tocaste la tarjeta ${taller.nombre}');
                     },
                     child: Container(
@@ -276,7 +293,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSmallCard(String imagePath, String description, Color backgroundColor) {
+  Widget _buildSmallCard(
+      String imagePath, String description, Color backgroundColor) {
     return Container(
       width: 80,
       height: 120,
