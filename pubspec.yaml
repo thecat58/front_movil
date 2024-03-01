@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
   go_router: ^13.2.0
   card_swiper: ^3.0.1
-  flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.3.13
+  # flutter_launcher_icons: ^0.13.1
+  # flutter_native_splash: ^2.3.13
 
   
 
