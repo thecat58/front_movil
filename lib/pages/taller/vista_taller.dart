@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movil/pages/home_screen.dart';
+import 'package:movil/pages/taller/registrar_taller.dart';
 
 class VistaTaller extends StatelessWidget {
   @override
@@ -116,7 +116,7 @@ class BotonFlotante extends StatelessWidget {
         // Navegar a la nueva página al hacer clic en el botón flotante
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => SubirDatos()),
         );
       },
       child: Icon(Icons.add),
