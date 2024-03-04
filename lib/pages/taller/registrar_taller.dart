@@ -7,9 +7,8 @@ class SubirDatos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( // Cambiado a MaterialApp para envolver Scaffold
-    debugShowCheckedModeBanner: false, // Oculta la marca de depuración
-
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 205, 82, 69),
@@ -27,8 +26,14 @@ class SubirDatos extends StatelessWidget {
                   height: 50,
                 ),
               ),
-              SizedBox(height: 8.0), // Espacio entre el logo y el texto
+              SizedBox(height: 8.0),
             ],
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop(); // Devuelve a la pantalla anterior
+            },
           ),
         ),
         body: Center(
@@ -74,76 +79,78 @@ class SubirDatos extends StatelessWidget {
                 width: 290.0,
                 child: Column(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        print('Botón Nombre del taller presionado');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        shadowColor: Colors.black,
-                        elevation: 4,
-                        minimumSize: Size(double.infinity, 50.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text('Nombre del taller', style: TextStyle(color: Colors.black)),
-                    ),
+                    buildCustomTextField('Nombre del taller', Icons.business),
                     SizedBox(height: 8.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        print('Botón Categoría presionado');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        shadowColor: Colors.black,
-                        elevation: 4,
-                        minimumSize: Size(double.infinity, 50.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text('Categoría', style: TextStyle(color: Colors.black)),
-                    ),
+                    buildCustomTextField('Categoría', Icons.category),
                     SizedBox(height: 8.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        print('Botón Descripción del taller presionado');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        shadowColor: Colors.black,
-                        elevation: 4,
-                        minimumSize: Size(double.infinity, 50.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text('Descripción del taller', style: TextStyle(color: Colors.black)),
-                    ),
-                    SizedBox(height: 16.0),
+                    buildCustomTextField(
+                        'Descripción del taller', Icons.description),
+                    SizedBox(height: 8.0),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Contactos',
+                        'Contáctanos',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
                       ),
+                    ),
+                    SizedBox(height: 8.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.facebook),
+                          onPressed: () {
+                            // Abrir enlace de Facebook
+                            print('Abrir enlace de Facebook');
+                          },
+                        ),
+                        IconButton(
+                          icon: InkWell(
+                            onTap: () {
+                              // Acción al presionar el botón de Instagram
+                              print('Abrir enlace de Instagram');
+                            },
+                            child: Image.asset(
+                              'assets/instagram_icon.png',
+                              width: 40, // Mismo ancho que los otros iconos
+                              height: 40, // Mismo alto que los otros iconos
+                            ),
+                          ),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: InkWell(
+                            onTap: () {
+                              // Acción al presionar el botón de WhatsApp
+                              print('Abrir enlace de WhatsApp');
+                            },
+                            child: Image.asset(
+                              'assets/whatsapp.png',
+                              width: 40, // Mismo ancho que los otros iconos
+                              height: 40, // Mismo alto que los otros iconos
+                            ),
+                          ),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: InkWell(
+                            onTap: () {
+                              // Acción al presionar el botón de WhatsApp
+                              print('Abrir enlace de tiktok');
+                            },
+                            child: Image.asset(
+                              'assets/tiktok.png',
+                              width: 40, // Mismo ancho que los otros iconos
+                              height: 40, // Mismo alto que los otros iconos
+                            ),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -154,4 +161,48 @@ class SubirDatos extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildCustomTextField(String labelText, IconData icon,
+      {int maxLines = 1}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.black),
+      ),
+      child: Row(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              icon,
+              color: Colors.black,
+            ),
+          ),
+          Expanded(
+            child: TextFormField(
+              maxLines: maxLines,
+              decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                labelText: labelText,
+                labelStyle: TextStyle(color: Colors.black),
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                hoverColor: Colors.transparent,
+                fillColor: Colors.transparent,
+                focusColor: Colors.transparent,
+              ),
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
+
+

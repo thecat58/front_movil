@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: const Center(
                 child: Text(
-                  '¡Bienvenidos!',
+                  '¡Nuestros servicios!',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -169,10 +169,10 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 16),
                         child: Text(
-                          'Ver Más',
+                          'Ver Más...',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 14,
+                            fontSize: 17,
                           ),
                         ),
                       ),
