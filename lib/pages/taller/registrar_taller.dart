@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/mapa_taller.dart';
 
 void main() => runApp(const SubirDatos());
 
@@ -156,11 +157,56 @@ class SubirDatos extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 16.0),
+                      InkWell(
+                        onTap: () {
+                          // Navegar a la página MapScreen2
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapScreen2(),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/ubicacion.png',
+                              width: 60,
+                              height: 60,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Dirección del taller', // Aquí colocas la dirección del taller
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
                     ],
                   ),
                 ),
               ],
             ),
+          ),
+        ),
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(right: 5.0, bottom: 1), // Posición fija del botón "Guardar cambios"
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              // Acción al presionar el botón de guardar cambios
+              print('Guardar cambios');
+            },
+            icon: Icon(Icons.add, color: Colors.black), // Cambio del color del icono a negro
+            label: Text(
+              'Guardar cambios',
+              style: TextStyle(color: Colors.black),
+            ),
+            backgroundColor: Color.fromARGB(255, 205, 82, 69),
           ),
         ),
       ),

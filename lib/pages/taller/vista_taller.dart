@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movil/pages/taller/descripcion_ralle.dart';
-import 'package:movil/pages/taller/registrar_taller.dart';
+import 'package:movil/pages/taller/descripcion_ralle.dart'; // Importación de otro archivo
+import 'package:movil/pages/taller/registrar_taller.dart'; // Importación de otro archivo
 
 class VistaTaller extends StatelessWidget {
+  // Definir un controlador de texto para el campo de búsqueda
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +27,20 @@ class VistaTaller extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Campo de búsqueda
           Container(
             color: Colors.white,
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0), // Ajuste de margen
             child: TextField(
+              controller: _searchController, // Asignar el controlador de texto
               decoration: InputDecoration(
                 hintText: '',
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () {
-                    FocusScope.of(context).unfocus();
+                    // Cerrar el teclado y borrar el texto del campo de búsqueda
+                    _clearSearchField(context);
                   },
                 ),
                 border: OutlineInputBorder(
@@ -51,9 +57,9 @@ class VistaTaller extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20), // Espacio hacia abajo
+                  SizedBox(height: 5), // Espacio hacia abajo
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0), // Padding ajustado
+                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -64,7 +70,7 @@ class VistaTaller extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0), // Padding ajustado
+                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -75,7 +81,18 @@ class VistaTaller extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0), // Padding ajustado
+                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red),
+                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey),
+                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -99,9 +116,10 @@ class VistaTaller extends StatelessWidget {
     );
   }
 
+  // Función para construir las tarjetas
   Widget _buildSmallCard(String imagePath, String title, Color color) {
     return Container(
-      width: 100.0, // Ajuste de ancho
+      width: 120.0, // Ajuste de ancho
       height: 150.0, // Ajuste de alto
       decoration: BoxDecoration(
         color: color,
@@ -124,6 +142,14 @@ class VistaTaller extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Función para cerrar el teclado y borrar el texto del campo de búsqueda
+  void _clearSearchField(BuildContext context) {
+    // Cerrar el teclado
+    FocusScope.of(context).unfocus();
+    // Borrar el texto del campo de búsqueda
+    _searchController.clear();
   }
 }
 
