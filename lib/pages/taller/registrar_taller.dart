@@ -36,126 +36,131 @@ class SubirDatos extends StatelessWidget {
             },
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(height: 16.0),
-              Text(
-                'REGISTRAR TALLER',
-                style: TextStyle(color: Colors.black87),
-              ),
-              SizedBox(height: 8.0),
-              InkWell(
-                onTap: () {
-                  print('Botón de subir imagen presionado');
-                },
-                child: Container(
-                  width: 290.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 205, 82, 69),
-                    borderRadius: BorderRadius.circular(20.0),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 16.0),
+                Text(
+                  'REGISTRAR TALLER',
+                  style: TextStyle(color: Colors.black87),
+                ),
+                SizedBox(height: 8.0),
+                InkWell(
+                  onTap: () {
+                    print('Botón de subir imagen presionado');
+                  },
+                  child: Container(
+                    width: 350.0,
+                    height: 150.0,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 205, 82, 69),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.file_upload,
+                          color: Colors.white,
+                          size: 90.0,
+                        ),
+                        SizedBox(height: 8.0),
+                        Text(
+                          'Subir imagen del taller',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
+                ),
+                SizedBox(height: 16.0),
+                Container(
+                  width: 350.0,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.file_upload,
-                        color: Colors.black,
-                        size: 60.0,
+                      buildCustomTextField('Nombre del taller', Icons.business),
+                      SizedBox(height: 8.0),
+                      buildCustomTextField('Categoría', Icons.category),
+                      SizedBox(height: 8.0),
+                      buildCustomTextField(
+                          'Descripción del taller', Icons.description),
+                      SizedBox(height: 8.0),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Contáctanos',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                       SizedBox(height: 8.0),
-                      Text(
-                        'Subir imagen del taller',
-                        style: TextStyle(color: Colors.white),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.facebook),
+                            onPressed: () {
+                              // Abrir enlace de Facebook
+                              print('Abrir enlace de Facebook');
+                            },
+                          ),
+                          SizedBox(
+                              width: 10), // Ajustar el espacio entre los botones
+                          Flexible(
+                            child: IconButton(
+                              icon: Image.asset(
+                                'assets/instagram_icon.png',
+                                width: 40, // Mismo ancho que los otros iconos
+                                height: 40, // Mismo alto que los otros iconos
+                              ),
+                              onPressed: () {
+                                // Acción al presionar el botón de Instagram
+                                print('Abrir enlace de Instagram');
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                              width: 10), // Ajustar el espacio entre los botones
+                          Flexible(
+                            child: IconButton(
+                              icon: Image.asset(
+                                'assets/whatsapp.png',
+                                width: 40, // Mismo ancho que los otros iconos
+                                height: 40, // Mismo alto que los otros iconos
+                              ),
+                              onPressed: () {
+                                // Acción al presionar el botón de WhatsApp
+                                print('Abrir enlace de WhatsApp');
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                              width: 10), // Ajustar el espacio entre los botones
+                          Flexible(
+                            child: IconButton(
+                              icon: Image.asset(
+                                'assets/tiktok.png',
+                                width: 40, // Mismo ancho que los otros iconos
+                                height: 40, // Mismo alto que los otros iconos
+                              ),
+                              onPressed: () {
+                                // Acción al presionar el botón de TikTok
+                                print('Abrir enlace de TikTok');
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Container(
-                width: 290.0,
-                child: Column(
-                  children: [
-                    buildCustomTextField('Nombre del taller', Icons.business),
-                    SizedBox(height: 8.0),
-                    buildCustomTextField('Categoría', Icons.category),
-                    SizedBox(height: 8.0),
-                    buildCustomTextField(
-                        'Descripción del taller', Icons.description),
-                    SizedBox(height: 8.0),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Contáctanos',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.facebook),
-                          onPressed: () {
-                            // Abrir enlace de Facebook
-                            print('Abrir enlace de Facebook');
-                          },
-                        ),
-                        IconButton(
-                          icon: InkWell(
-                            onTap: () {
-                              // Acción al presionar el botón de Instagram
-                              print('Abrir enlace de Instagram');
-                            },
-                            child: Image.asset(
-                              'assets/instagram_icon.png',
-                              width: 40, // Mismo ancho que los otros iconos
-                              height: 40, // Mismo alto que los otros iconos
-                            ),
-                          ),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: InkWell(
-                            onTap: () {
-                              // Acción al presionar el botón de WhatsApp
-                              print('Abrir enlace de WhatsApp');
-                            },
-                            child: Image.asset(
-                              'assets/whatsapp.png',
-                              width: 40, // Mismo ancho que los otros iconos
-                              height: 40, // Mismo alto que los otros iconos
-                            ),
-                          ),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: InkWell(
-                            onTap: () {
-                              // Acción al presionar el botón de WhatsApp
-                              print('Abrir enlace de tiktok');
-                            },
-                            child: Image.asset(
-                              'assets/tiktok.png',
-                              width: 40, // Mismo ancho que los otros iconos
-                              height: 40, // Mismo alto que los otros iconos
-                            ),
-                          ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -204,5 +209,3 @@ class SubirDatos extends StatelessWidget {
     );
   }
 }
-
-

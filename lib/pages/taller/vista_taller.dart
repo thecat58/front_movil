@@ -59,7 +59,7 @@ class VistaTaller extends StatelessWidget {
                       children: [
                         _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red),
                         _buildSmallCard('assets/imgcateg3.png', 'Neumáticos y Ruedas', Colors.grey),
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red),
+                        _buildSmallCard('assets/imgcateg1.png', 'Lavado de autos', Colors.red),
                       ],
                     ),
                   ),
@@ -68,9 +68,9 @@ class VistaTaller extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.grey),
-                        _buildSmallCard('assets/imgcateg3.png', 'Neumáticos y Ruedas', Colors.red),
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.grey),
+                        _buildSmallCard('assets/imgcateg1.png', 'Reparación de frenos', Colors.grey),
+                        _buildSmallCard('assets/imgcateg3.png', 'Cambio de neumáticos', Colors.red),
+                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento eléctrico', Colors.grey),
                       ],
                     ),
                   ),
@@ -79,9 +79,9 @@ class VistaTaller extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red),
-                        _buildSmallCard('assets/imgcateg3.png', 'Neumáticos y Ruedas', Colors.grey),
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red),
+                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red),
+                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey),
+                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red),
                       ],
                     ),
                   ),
