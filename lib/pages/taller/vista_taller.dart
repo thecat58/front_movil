@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movil/pages/taller/descripcion_ralle.dart'; // Importación de otro archivo
-import 'package:movil/pages/taller/registrar_taller.dart'; // Importación de otro archivo
+import 'package:movil/pages/taller/descripcion_ralle.dart';
+import 'package:movil/pages/taller/registrar_taller.dart';
+import 'package:movil/pages/taller/vista_categorias_taller.dart'; // Importa la página VistaCategorias
 
 class VistaTaller extends StatelessWidget {
   // Definir un controlador de texto para el campo de búsqueda
@@ -63,9 +64,9 @@ class VistaTaller extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red),
-                        _buildSmallCard('assets/imgcateg3.png', 'Neumáticos y Ruedas', Colors.grey),
-                        _buildSmallCard('assets/imgcateg1.png', 'Lavado de autos', Colors.red),
+                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red, context),
+                        _buildSmallCard('assets/imgcateg3.png', 'Neumáticos y Ruedas', Colors.grey, context),
+                        _buildSmallCard('assets/imgcateg1.png', 'Lavado de autos', Colors.red, context),
                       ],
                     ),
                   ),
@@ -74,9 +75,9 @@ class VistaTaller extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Reparación de frenos', Colors.grey),
-                        _buildSmallCard('assets/imgcateg3.png', 'Cambio de neumáticos', Colors.red),
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento eléctrico', Colors.grey),
+                        _buildSmallCard('assets/imgcateg1.png', 'Reparación de frenos', Colors.grey, context),
+                        _buildSmallCard('assets/imgcateg3.png', 'Cambio de neumáticos', Colors.red, context),
+                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento eléctrico', Colors.grey, context),
                       ],
                     ),
                   ),
@@ -85,9 +86,9 @@ class VistaTaller extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red),
-                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey),
-                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red),
+                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red, context),
+                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey, context),
+                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red, context),
                       ],
                     ),
                   ),
@@ -96,9 +97,9 @@ class VistaTaller extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red),
-                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey),
-                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red),
+                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red, context),
+                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey, context),
+                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red, context),
                       ],
                     ),
                   ),
@@ -117,29 +118,38 @@ class VistaTaller extends StatelessWidget {
   }
 
   // Función para construir las tarjetas
-  Widget _buildSmallCard(String imagePath, String title, Color color) {
-    return Container(
-      width: 120.0, // Ajuste de ancho
-      height: 150.0, // Ajuste de alto
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            imagePath,
-            width: 80.0, // Tamaño de la imagen ajustado
-            height: 80.0, // Tamaño de la imagen ajustado
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            title,
-            style: TextStyle(color: Colors.white, fontSize: 12), // Tamaño de fuente ajustado
-            textAlign: TextAlign.center,
-          ),
-        ],
+  Widget _buildSmallCard(String imagePath, String title, Color color, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // Navega a la página VistaCategorias
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VistaCategorias()),
+        );
+      },
+      child: Container(
+        width: 120.0, // Ajuste de ancho
+        height: 150.0, // Ajuste de alto
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imagePath,
+              width: 80.0, // Tamaño de la imagen ajustado
+              height: 80.0, // Tamaño de la imagen ajustado
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              title,
+              style: TextStyle(color: Colors.white, fontSize: 12), // Tamaño de fuente ajustado
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
