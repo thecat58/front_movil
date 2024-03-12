@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:movil/pages/nav.dart';
-import 'package:movil/pages/perfil.dart';
-import 'package:movil/pages/rejister.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final TextEditingController usuarioController = TextEditingController();
+  final TextEditingController contrasenaController = TextEditingController();
+
+  Future<void> login(String usuario, String contrasena) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/api/login/'),
+        body: {
+          'email': usuario,
+          'password': contrasena, // Corregir la clave de la contraseña
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('cuenta creada');
+        // Aquí podrías realizar otras acciones, como navegar a una nueva pantalla
+      } else {
+        print('Error en la solicitud: ${response.statusCode}');
+        // Manejo de errores: podrías mostrar un diálogo de error al usuario
+      }
+    } catch (e) {
+      print('Error en la solicitud: $e');
+      // Manejo de errores: podrías mostrar un diálogo de error al usuario
+    }
+  }
+
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,48 +128,50 @@ class LoginScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10),
       alignment: Alignment.center,
       child: Container(
-      width: 300,
-      child: TextField( 
-        style: TextStyle(fontSize: 25), // Ajusta el tamaño de la fuente aquí
-        decoration: InputDecoration(
-          hintText: "Usuario",
-          fillColor: Colors.white,
-          suffixIcon: Icon(Icons.person),
-          contentPadding: EdgeInsets.symmetric(vertical: 15),
-          alignLabelWithHint: true,
+        width: 300,
+        child: TextField(
+          controller: usuarioController,
+          style: TextStyle(fontSize: 25),
+          decoration: InputDecoration(
+            hintText: "Usuario",
+            fillColor: Colors.white,
+            suffixIcon: Icon(Icons.person),
+            contentPadding: EdgeInsets.symmetric(vertical: 15),
+            alignLabelWithHint: true,
+          ),
         ),
       ),
-      )
     );
   }
 
-Widget campoPassword() {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    alignment: Alignment.center, // Centra el contenido del contenedor
-    child: Container(
-      width: 300, // Ancho deseado del TextField
-      child: TextField(
-        obscureText: true,
-        style: TextStyle(fontSize: 25), // Ajusta el tamaño de la fuente aquí
-        decoration: InputDecoration(
-          hintText: "Contraseña",
-          fillColor: Colors.white,
-          suffixIcon: Icon(Icons.no_encryption_sharp),
-          contentPadding: EdgeInsets.symmetric(vertical: 15),
+  Widget campoPassword() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      alignment: Alignment.center,
+      child: Container(
+        width: 300,
+        child: TextField(
+          controller: contrasenaController,
+          obscureText: true,
+          style: TextStyle(fontSize: 25),
+          decoration: InputDecoration(
+            hintText: "Contraseña",
+            fillColor: Colors.white,
+            suffixIcon: Icon(Icons.no_encryption_sharp),
+            contentPadding: EdgeInsets.symmetric(vertical: 15),
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget botonEntrar(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: TextButton(
         onPressed: () {
-          // Navega a la página con el CustomBottomNavigationBar después de iniciar sesión
+          login(usuarioController.text.toString(),
+              contrasenaController.text.toString());
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
