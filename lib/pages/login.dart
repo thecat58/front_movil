@@ -1,35 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:movil/pages/models/loginControler.dart';
 import 'package:movil/pages/nav.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usuarioController = TextEditingController();
   final TextEditingController contrasenaController = TextEditingController();
 
-  Future<void> login(String usuario, String contrasena) async {
-    try {
-      http.Response response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/api/login/'),
-        body: {
-          'email': usuario,
-          'password': contrasena, // Corregir la clave de la contraseña
-        },
-      );
+  bool _isButtonEnabled = false;
 
-      if (response.statusCode == 200) {
-        print('cuenta creada');
-        // Aquí podrías realizar otras acciones, como navegar a una nueva pantalla
-      } else {
-        print('Error en la solicitud: ${response.statusCode}');
-        // Manejo de errores: podrías mostrar un diálogo de error al usuario
-      }
-    } catch (e) {
-      print('Error en la solicitud: $e');
-      // Manejo de errores: podrías mostrar un diálogo de error al usuario
-    }
+  void _validateFields() {
+    final usuario = usuarioController.text.trim();
+    final contrasena = contrasenaController.text.trim();
+    setState(() {
+      _isButtonEnabled = usuario.isNotEmpty && contrasena.isNotEmpty;
+    });
   }
 
-  LoginScreen({Key? key}) : super(key: key);
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Cerrar',
+          onPressed: () {
+            usuarioController.clear();
+            contrasenaController.clear();
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +140,7 @@ class LoginScreen extends StatelessWidget {
         child: TextField(
           controller: usuarioController,
           style: TextStyle(fontSize: 25),
+          onChanged: (_) => _validateFields(),
           decoration: InputDecoration(
             hintText: "Usuario",
             fillColor: Colors.white,
@@ -154,6 +163,7 @@ class LoginScreen extends StatelessWidget {
           controller: contrasenaController,
           obscureText: true,
           style: TextStyle(fontSize: 25),
+          onChanged: (_) => _validateFields(),
           decoration: InputDecoration(
             hintText: "Contraseña",
             fillColor: Colors.white,
@@ -169,15 +179,25 @@ class LoginScreen extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: TextButton(
-        onPressed: () {
-          login(usuarioController.text.toString(),
-              contrasenaController.text.toString());
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CustomBottomNavigationBar()),
-          );
-        },
+        onPressed: _isButtonEnabled
+            ? () {
+                LoginController.login(
+                  usuarioController.text.trim(),
+                  contrasenaController.text.trim(),
+                ).then((success) {
+                  if (success) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CustomBottomNavigationBar(),
+                      ),
+                    );
+                  } else {
+                    _showSnackBar(context, 'Este usuario no está registrado');
+                  }
+                });
+              }
+            : null,
         style: TextButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: Color(0xFF3E485D),
