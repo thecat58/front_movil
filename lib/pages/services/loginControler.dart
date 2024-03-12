@@ -4,7 +4,7 @@ class LoginController {
   static Future<bool> login(String usuario, String contrasena) async {
     try {
       http.Response response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/api/login/'),
+        Uri.parse('http://192.168.80.20:8000/api/login/'),
         body: {
           'email': usuario,
           'password': contrasena,

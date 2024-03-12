@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movil/pages/models/loginControler.dart';
 import 'package:movil/pages/nav.dart';
+import 'package:movil/pages/services/loginControler.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -63,45 +63,50 @@ class _LoginScreenState extends State<LoginScreen> {
           color: Color.fromARGB(255, 188, 187, 187).withOpacity(0.5),
         ),
         Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              logo(),
-              SizedBox(height: 20),
-              nombre(),
-              campoUsuario(),
-              campoPassword(),
-              botonEntrar(context),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Acción al presionar el botón de registro con Facebook
-                    },
-                    icon: Icon(
-                      Icons.facebook,
-                      size: 50,
-                      color: Colors.blue,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                logo(),
+                SizedBox(height: 20),
+                nombre(),
+                SizedBox(height: 20),
+                campoUsuario(),
+                SizedBox(height: 10),
+                campoPassword(),
+                SizedBox(height: 20),
+                botonEntrar(context),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Acción al presionar el botón de registro con Facebook
+                      },
+                      icon: Icon(
+                        Icons.facebook,
+                        size: 50,
+                        color: Colors.blue,
+                      ),
+                      label: Text(""),
                     ),
-                    label: Text(""),
-                  ),
-                  SizedBox(width: 20),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Acción al presionar el botón de registro con Google
-                    },
-                    icon: Icon(
-                      Icons.g_mobiledata,
-                      size: 50,
-                      color: Colors.red,
+                    SizedBox(width: 20),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Acción al presionar el botón de registro con Google
+                      },
+                      icon: Icon(
+                        Icons.g_mobiledata,
+                        size: 50,
+                        color: Colors.red,
+                      ),
+                      label: Text(""),
                     ),
-                    label: Text(""),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -193,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   } else {
-                    _showSnackBar(context, 'Este usuario no está registrado');
+                    _showSnackBar(context, 'Este usuario no está registrado Registarate desde el sitio Web');
                   }
                 });
               }
