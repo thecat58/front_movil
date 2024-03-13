@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movil/pages/mapa_taller.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:movil/pages/services/s_registro_taller.dart';
 
 void main() => runApp(const SubirDatos());
 
@@ -8,6 +10,11 @@ class SubirDatos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String nombre = '';
+    String categoria = '';
+    String descripcion = '';
+    String imagenPath = '';
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -49,8 +56,18 @@ class SubirDatos extends StatelessWidget {
                 ),
                 SizedBox(height: 8.0),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     print('Botón de subir imagen presionado');
+                    // Llama a la función para seleccionar una imagen
+                    final picker = ImagePicker();
+                    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+                    if (pickedFile != null) {
+                      imagenPath = pickedFile.path;
+                      print('Ruta de la imagen seleccionada: $imagenPath');
+                    } else {
+                      print('No se seleccionó ninguna imagen.');
+                    }
                   },
                   child: Container(
                     width: 350.0,
@@ -81,12 +98,11 @@ class SubirDatos extends StatelessWidget {
                   width: 350.0,
                   child: Column(
                     children: [
-                      buildCustomTextField('Nombre del taller', Icons.business),
+                      buildCustomTextField('Nombre del taller', Icons.business, onChanged: (value) => nombre = value),
                       SizedBox(height: 8.0),
-                      buildCustomTextField('Categoría', Icons.category),
+                      buildCustomTextField('Categoría', Icons.category, onChanged: (value) => categoria = value),
                       SizedBox(height: 8.0),
-                      buildCustomTextField(
-                          'Descripción del taller', Icons.description),
+                      buildCustomTextField('Descripción del taller', Icons.description, onChanged: (value) => descripcion = value),
                       SizedBox(height: 8.0),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -110,14 +126,13 @@ class SubirDatos extends StatelessWidget {
                               print('Abrir enlace de Facebook');
                             },
                           ),
-                          SizedBox(
-                              width: 10), // Ajustar el espacio entre los botones
+                          SizedBox(width: 10),
                           Flexible(
                             child: IconButton(
                               icon: Image.asset(
                                 'assets/instagram_icon.png',
-                                width: 40, // Mismo ancho que los otros iconos
-                                height: 40, // Mismo alto que los otros iconos
+                                width: 40,
+                                height: 40,
                               ),
                               onPressed: () {
                                 // Acción al presionar el botón de Instagram
@@ -125,14 +140,13 @@ class SubirDatos extends StatelessWidget {
                               },
                             ),
                           ),
-                          SizedBox(
-                              width: 10), // Ajustar el espacio entre los botones
+                          SizedBox(width: 10),
                           Flexible(
                             child: IconButton(
                               icon: Image.asset(
                                 'assets/whatsapp.png',
-                                width: 40, // Mismo ancho que los otros iconos
-                                height: 40, // Mismo alto que los otros iconos
+                                width: 40,
+                                height: 40,
                               ),
                               onPressed: () {
                                 // Acción al presionar el botón de WhatsApp
@@ -140,14 +154,13 @@ class SubirDatos extends StatelessWidget {
                               },
                             ),
                           ),
-                          SizedBox(
-                              width: 10), // Ajustar el espacio entre los botones
+                          SizedBox(width: 10),
                           Flexible(
                             child: IconButton(
                               icon: Image.asset(
                                 'assets/tiktok.png',
-                                width: 40, // Mismo ancho que los otros iconos
-                                height: 40, // Mismo alto que los otros iconos
+                                width: 40,
+                                height: 40,
                               ),
                               onPressed: () {
                                 // Acción al presionar el botón de TikTok
@@ -195,13 +208,38 @@ class SubirDatos extends StatelessWidget {
           ),
         ),
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(right: 5.0, bottom: 1), // Posición fija del botón "Guardar cambios"
+          padding: EdgeInsets.only(right: 5.0, bottom: 1),
           child: FloatingActionButton.extended(
-            onPressed: () {
+            onPressed: () async {
               // Acción al presionar el botón de guardar cambios
               print('Guardar cambios');
+              // Llamar al servicio para registrar el taller
+              bool registrado = await ServicioRegistroTaller.registrarTaller(
+                nombre,
+                categoria,
+                descripcion,
+                imagenPath,
+              );
+
+              if (registrado) {
+                // Mostrar un mensaje de éxito
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('El taller se registró correctamente.'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              } else {
+                // Mostrar un mensaje de error
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Hubo un error al registrar el taller.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             },
-            icon: Icon(Icons.add, color: Colors.black), // Cambio del color del icono a negro
+            icon: Icon(Icons.add, color: Colors.black),
             label: Text(
               'Guardar cambios',
               style: TextStyle(color: Colors.black),
@@ -213,8 +251,7 @@ class SubirDatos extends StatelessWidget {
     );
   }
 
-  Widget buildCustomTextField(String labelText, IconData icon,
-      {int maxLines = 1}) {
+  Widget buildCustomTextField(String labelText, IconData icon, {int maxLines = 1, Function(String)? onChanged}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -232,6 +269,7 @@ class SubirDatos extends StatelessWidget {
           Expanded(
             child: TextFormField(
               maxLines: maxLines,
+              onChanged: onChanged,
               decoration: InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
