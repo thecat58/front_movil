@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movil/pages/mapa_taller.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:movil/pages/mapa_taller.dart';
 import 'package:movil/pages/services/s_registro_taller.dart';
+import 'package:movil/pages/models/registro_taller.dart';
+import 'dart:io'; // Importa dart:io para usar la clase File
+import 'package:http/http.dart' as http;
 
 void main() => runApp(const SubirDatos());
 
@@ -11,9 +14,9 @@ class SubirDatos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String nombre = '';
-    String categoria = '';
+    String direccion = '';
     String descripcion = '';
-    String imagenPath = '';
+    File? imagenFile; // Declara imagenFile como un objeto File nullable
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -63,8 +66,8 @@ class SubirDatos extends StatelessWidget {
                     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
                     if (pickedFile != null) {
-                      imagenPath = pickedFile.path;
-                      print('Ruta de la imagen seleccionada: $imagenPath');
+                      imagenFile = File(pickedFile.path); // Crea un objeto File
+                      print('Ruta de la imagen seleccionada: ${pickedFile.path}');
                     } else {
                       print('No se seleccionó ninguna imagen.');
                     }
@@ -100,7 +103,7 @@ class SubirDatos extends StatelessWidget {
                     children: [
                       buildCustomTextField('Nombre del taller', Icons.business, onChanged: (value) => nombre = value),
                       SizedBox(height: 8.0),
-                      buildCustomTextField('Categoría', Icons.category, onChanged: (value) => categoria = value),
+                      buildCustomTextField('Dirección', Icons.location_on, onChanged: (value) => direccion = value),
                       SizedBox(height: 8.0),
                       buildCustomTextField('Descripción del taller', Icons.description, onChanged: (value) => descripcion = value),
                       SizedBox(height: 8.0),
@@ -116,60 +119,6 @@ class SubirDatos extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.facebook),
-                            onPressed: () {
-                              // Abrir enlace de Facebook
-                              print('Abrir enlace de Facebook');
-                            },
-                          ),
-                          SizedBox(width: 10),
-                          Flexible(
-                            child: IconButton(
-                              icon: Image.asset(
-                                'assets/instagram_icon.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                              onPressed: () {
-                                // Acción al presionar el botón de Instagram
-                                print('Abrir enlace de Instagram');
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Flexible(
-                            child: IconButton(
-                              icon: Image.asset(
-                                'assets/whatsapp.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                              onPressed: () {
-                                // Acción al presionar el botón de WhatsApp
-                                print('Abrir enlace de WhatsApp');
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Flexible(
-                            child: IconButton(
-                              icon: Image.asset(
-                                'assets/tiktok.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                              onPressed: () {
-                                // Acción al presionar el botón de TikTok
-                                print('Abrir enlace de TikTok');
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
                       SizedBox(height: 16.0),
                       InkWell(
                         onTap: () {
@@ -213,27 +162,49 @@ class SubirDatos extends StatelessWidget {
             onPressed: () async {
               // Acción al presionar el botón de guardar cambios
               print('Guardar cambios');
-              // Llamar al servicio para registrar el taller
-              bool registrado = await ServicioRegistroTaller.registrarTaller(
-                nombre,
-                categoria,
-                descripcion,
-                imagenPath,
-              );
-
-              if (registrado) {
-                // Mostrar un mensaje de éxito
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('El taller se registró correctamente.'),
-                    backgroundColor: Colors.green,
-                  ),
+              // Verifica si imagenFile no es nulo
+              if (imagenFile != null) {
+                // Llamar al servicio para registrar el taller
+                bool registrado = await TallerService.addTallers(
+                  imagenFile!, // Usa ! para asegurarte de que no sea nulo
+                  nombre,
+                  direccion,
+                  descripcion,
                 );
+
+                if (registrado) {
+                  // Mostrar un mensaje de éxito
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Éxito'),
+                        content: Text('Los datos fueron guardados correctamente.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Aceptar'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  // Mostrar un mensaje de error
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Hubo un error al registrar el taller.'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               } else {
-                // Mostrar un mensaje de error
+                // Mostrar un mensaje de error si imagenFile es nulo
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Hubo un error al registrar el taller.'),
+                    content: Text('Debes seleccionar una imagen del taller.'),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -271,8 +242,7 @@ class SubirDatos extends StatelessWidget {
               maxLines: maxLines,
               onChanged: onChanged,
               decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                 labelText: labelText,
                 labelStyle: TextStyle(color: Colors.black),
                 border: InputBorder.none,

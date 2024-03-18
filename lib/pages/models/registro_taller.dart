@@ -1,38 +1,22 @@
-import 'dart:convert';
-
-class RegistroTaller {
+class Taller {
   final int id;
-  final String foto;
   final String nombre;
-  final int usuarioTallerId;
+  final String ubicacion;
+  final String fotoUrl; // Suponiendo que el backend devuelve la URL de la imagen
 
-  RegistroTaller({
+  Taller({
     required this.id,
-    required this.foto,
     required this.nombre,
-    required this.usuarioTallerId,
+    required this.ubicacion,
+    required this.fotoUrl,
   });
 
-  factory RegistroTaller.fromJson(Map<String, dynamic> json) {
-    return RegistroTaller(
+  factory Taller.fromJson(Map<String, dynamic> json) {
+    return Taller(
       id: json['id'],
-      foto: json['foto'],
-      nombre: json['nombre'],
-      usuarioTallerId: json['usuarioTallerId'],
+      nombre: json['nombre'] ?? '',
+      ubicacion: json['ubicacion'] ?? '',
+      fotoUrl: json['foto'] ?? '', // Suponiendo que el backend devuelve la URL de la imagen
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'foto': foto,
-      'nombre': nombre,
-      'usuarioTallerId': usuarioTallerId,
-    };
-  }
-
-  @override
-  String toString() {
-    return 'RegistroTaller{id: $id, foto: $foto, nombre: $nombre, usuarioTallerId: $usuarioTallerId}';
   }
 }
