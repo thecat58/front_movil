@@ -29,16 +29,25 @@ class _MapScreenState extends State<MapScreen> {
         "-115.17591623962805,36.1441659750464",
         "-115.18823024661218,36.13837278563257"));
 
-    setState(() {
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        listOfPoints = data['futures'][0]['geometry']['coordinates'];
-        points = listOfPoints
-            .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
-            .toList();
-      }
-      isFetchingData = false; // Finalizando la carga de datos
-    });
+setState(() {
+  if (response.statusCode == 200) {
+    var data = jsonDecode(response.body);
+    if (data != null && data['futures'] != null && data['futures'].isNotEmpty && data['futures'][0]['geometry'] != null && data['futures'][0]['geometry']['coordinates'] != null) {
+      listOfPoints = data['futures'][0]['geometry']['coordinates'];
+      points = listOfPoints
+          .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
+          .toList();
+    } else {
+      // La respuesta no contiene los datos esperados
+      // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
+    }
+  } else {
+    // La solicitud HTTP no tuvo éxito
+    // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
+  }
+  isFetchingData = false; // Finalizando la carga de datos
+});
+
   }
 
   @override

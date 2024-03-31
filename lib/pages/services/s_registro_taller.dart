@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class TallerService {
-  static const ROOT = 'http://192.168.80.10:8000/api/taller/';
+  static const ROOT = 'http://192.168.80.22:8000/api/taller/';
   static const _GET_ALL_ACTION = 'GET_ALL';
   static const _ADD_EMP_ACTION = 'ADD_EMP';
   static const _UPDATE_EMP_ACTION = 'UPDATE_EMP';
@@ -83,12 +83,13 @@ class TallerService {
     }
   }
 
-  static Future<bool> deleteTaller(String empId) async {
-    try {
-      final response = await http.delete(Uri.parse(ROOT + empId + '/'));
-      return response.statusCode == 200;
-    } catch (e) {
-      throw Exception('Error al eliminar taller: $e');
-    }
+static Future<bool> deleteTaller(String empId) async {
+  try {
+    final response = await http.delete(Uri.parse(ROOT + empId + '/?action=$_DELETE_EMP_ACTION'));
+    return response.statusCode == 200;
+  } catch (e) {
+    throw Exception('Error al eliminar taller: $e');
   }
+}
+
 }

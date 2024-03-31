@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movil/pages/login.dart';
-import 'package:movil/pages/nav.dart'; // Asegúrate de importar el archivo donde se define CustomBottomNavigationBar
 
 void main() {
   runApp(MainApp());

@@ -21,7 +21,7 @@ class _VistaTallerState extends State<Vista_Taller> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Image.asset(
-            'assets/logo.png',
+            'assets/logomovil.png',
             width: 50,
             height: 50,
           ),

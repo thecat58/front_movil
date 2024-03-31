@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movil/pages/taller/descripcion_ralle.dart';
 import 'package:movil/pages/taller/registrar_taller.dart';
 import 'package:movil/pages/taller/vista_categorias_taller.dart'; // Importa la página VistaCategorias
 
@@ -19,7 +18,7 @@ class VistaTaller extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Image.asset(
-            'assets/logo.png',
+            'assets/logomovil.png',
             width: 50,
             height: 50,
           ),
@@ -111,7 +110,7 @@ class VistaTaller extends StatelessWidget {
         ],
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 80.0),
+        padding: const EdgeInsets.only(bottom: 5.0),
         child: BotonFlotante(),
       ),
     );

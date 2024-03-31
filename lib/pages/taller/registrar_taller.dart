@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movil/pages/mapa_taller.dart';
 import 'package:movil/pages/services/s_registro_taller.dart';
-import 'package:movil/pages/models/registro_taller.dart';
 import 'dart:io'; // Importa dart:io para usar la clase File
 import 'package:http/http.dart' as http;
-
-void main() => runApp(const SubirDatos());
+// import '../nav.dart';
 
 class SubirDatos extends StatelessWidget {
   const SubirDatos({Key? key}) : super(key: key);
@@ -32,7 +30,7 @@ class SubirDatos extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Image.asset(
-                  'assets/logo.png',
+                  'assets/logomovil.png',
                   width: 50,
                   height: 50,
                 ),
@@ -43,7 +41,11 @@ class SubirDatos extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Devuelve a la pantalla anterior
+              Navigator.of(context).pop(); // Cerrar el diálogo de éxito
+              // Limpiar los campos de texto
+              nombre = '';
+              direccion = '';
+              descripcion = '';
             },
           ),
         ),
@@ -60,16 +62,38 @@ class SubirDatos extends StatelessWidget {
                 SizedBox(height: 8.0),
                 InkWell(
                   onTap: () async {
+                    // Función para manejar la selección de imagen
                     print('Botón de subir imagen presionado');
                     // Llama a la función para seleccionar una imagen
                     final picker = ImagePicker();
-                    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+                    final pickedFile =
+                        await picker.getImage(source: ImageSource.gallery);
 
                     if (pickedFile != null) {
-                      imagenFile = File(pickedFile.path); // Crea un objeto File
-                      print('Ruta de la imagen seleccionada: ${pickedFile.path}');
+                      // Si se selecciona una imagen, crea un objeto File
+                      imagenFile = File(pickedFile.path);
+                      print(
+                          'Ruta de la imagen seleccionada: ${pickedFile.path}');
                     } else {
+                      // Si no se selecciona ninguna imagen, muestra una alerta
                       print('No se seleccionó ninguna imagen.');
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Alerta'),
+                            content: Text('No se seleccionó ninguna imagen.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Aceptar'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     }
                   },
                   child: Container(
@@ -101,11 +125,15 @@ class SubirDatos extends StatelessWidget {
                   width: 350.0,
                   child: Column(
                     children: [
-                      buildCustomTextField('Nombre del taller', Icons.business, onChanged: (value) => nombre = value),
+                      buildCustomTextField('Nombre del taller', Icons.business,
+                          onChanged: (value) => nombre = value),
                       SizedBox(height: 8.0),
-                      buildCustomTextField('Dirección', Icons.location_on, onChanged: (value) => direccion = value),
+                      buildCustomTextField('Dirección', Icons.location_on,
+                          onChanged: (value) => direccion = value),
                       SizedBox(height: 8.0),
-                      buildCustomTextField('Descripción del taller', Icons.description, onChanged: (value) => descripcion = value),
+                      buildCustomTextField(
+                          'Descripción del taller', Icons.description,
+                          onChanged: (value) => descripcion = value),
                       SizedBox(height: 8.0),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -122,6 +150,7 @@ class SubirDatos extends StatelessWidget {
                       SizedBox(height: 16.0),
                       InkWell(
                         onTap: () {
+                          // Navegar
                           // Navegar a la página MapScreen2
                           Navigator.push(
                             context,
@@ -173,23 +202,14 @@ class SubirDatos extends StatelessWidget {
                 );
 
                 if (registrado) {
-                  // Mostrar un mensaje de éxito
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Éxito'),
-                        content: Text('Los datos fueron guardados correctamente.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Aceptar'),
-                          ),
-                        ],
-                      );
-                    },
+                  // Mostrar un mensaje de éxito en el dispositivo
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Los datos fueron guardados correctamente.'),
+                      backgroundColor:
+                          Colors.green, // Color de fondo del mensaje
+                    ),
                   );
                 } else {
                   // Mostrar un mensaje de error
@@ -218,11 +238,17 @@ class SubirDatos extends StatelessWidget {
             backgroundColor: Color.fromARGB(255, 205, 82, 69),
           ),
         ),
+        // bottomNavigationBar: CustomBottomNavigationBar(
+        //   // Define los parámetros selectedIndex y onItemTapped aquí
+        //   // selectedIndex: _selectedIndex,
+        //   // onItemTapped: _onItemTapped,
+        // ),
       ),
     );
   }
 
-  Widget buildCustomTextField(String labelText, IconData icon, {int maxLines = 1, Function(String)? onChanged}) {
+  Widget buildCustomTextField(String labelText, IconData icon,
+      {int maxLines = 1, Function(String)? onChanged}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -242,7 +268,8 @@ class SubirDatos extends StatelessWidget {
               maxLines: maxLines,
               onChanged: onChanged,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                contentPadding:
+                EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                 labelText: labelText,
                 labelStyle: TextStyle(color: Colors.black),
                 border: InputBorder.none,
