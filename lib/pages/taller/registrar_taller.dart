@@ -4,6 +4,7 @@ import 'package:movil/pages/mapa_taller.dart';
 import 'package:movil/pages/services/s_registro_taller.dart';
 import 'dart:io'; // Importa dart:io para usar la clase File
 import 'package:http/http.dart' as http;
+import 'SocialIcons.dart'; // Importa el archivo con los iconos sociales
 
 class SubirDatos extends StatefulWidget {
   const SubirDatos({Key? key}) : super(key: key);
@@ -114,19 +115,34 @@ class _SubirDatosState extends State<SubirDatos> {
                     color: Color.fromARGB(255, 205, 82, 69),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Stack(
+                    fit: StackFit.expand,
                     children: [
-                      Icon(
-                        Icons.file_upload,
-                        color: Colors.white,
-                        size: 90.0,
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        'Subir imagen del taller',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      if (imagenFile != null)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.file(
+                            imagenFile!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      if (imagenFile == null)
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.file_upload,
+                              color: Colors.white,
+                              size: 90.0,
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              'Subir imagen del taller',
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),
@@ -145,20 +161,10 @@ class _SubirDatosState extends State<SubirDatos> {
                     buildCustomTextField(
                         'Descripción del taller', Icons.description,
                         controller: _descripcionController),
-                    SizedBox(height: 8.0),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Contáctanos',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
                     SizedBox(height: 16.0),
+                    // Aquí colocamos los iconos sociales
+                    SocialIconsRow(),
+                    SizedBox(height: 16),
                     InkWell(
                       onTap: () {
                         // Navegar
@@ -188,7 +194,6 @@ class _SubirDatosState extends State<SubirDatos> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 16.0),
                   ],
                 ),
               ),
@@ -218,8 +223,7 @@ class _SubirDatosState extends State<SubirDatos> {
                   SnackBar(
                     content: Text('Datos enviados correctamente.'),
                     backgroundColor: Colors.green, // Color de fondo del mensaje
-                    duration: Duration(seconds: 5), // Duración 
-
+                    duration: Duration(seconds: 5), // Duración
                   ),
                 );
 

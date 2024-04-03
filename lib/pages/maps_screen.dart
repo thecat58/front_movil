@@ -26,28 +26,31 @@ class _MapScreenState extends State<MapScreen> {
     });
 
     var response = await http.get(getRouteUrl(
-        "-115.17591623962805,36.1441659750464",
-        "-115.18823024661218,36.13837278563257"));
+        "-4.460019457618955,36.70482003977633 ",
+        "-4.460019457618955,36.70482003977633 "));
 
-setState(() {
-  if (response.statusCode == 200) {
-    var data = jsonDecode(response.body);
-    if (data != null && data['futures'] != null && data['futures'].isNotEmpty && data['futures'][0]['geometry'] != null && data['futures'][0]['geometry']['coordinates'] != null) {
-      listOfPoints = data['futures'][0]['geometry']['coordinates'];
-      points = listOfPoints
-          .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
-          .toList();
-    } else {
-      // La respuesta no contiene los datos esperados
-      // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
-    }
-  } else {
-    // La solicitud HTTP no tuvo éxito
-    // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
-  }
-  isFetchingData = false; // Finalizando la carga de datos
-});
-
+    setState(() {
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data != null &&
+            data['futures'] != null &&
+            data['futures'].isNotEmpty &&
+            data['futures'][0]['geometry'] != null &&
+            data['futures'][0]['geometry']['coordinates'] != null) {
+          listOfPoints = data['futures'][0]['geometry']['coordinates'];
+          points = listOfPoints
+              .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
+              .toList();
+        } else {
+          // La respuesta no contiene los datos esperados
+          // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
+        }
+      } else {
+        // La solicitud HTTP no tuvo éxito
+        // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
+      }
+      isFetchingData = false; // Finalizando la carga de datos
+    });
   }
 
   @override
@@ -65,7 +68,7 @@ setState(() {
           child: FlutterMap(
             options: const MapOptions(
               initialZoom: 13,
-              initialCenter: LatLng(36.14416597504649, -115.17591623962805),
+              initialCenter: LatLng(36.70482003977633, -4.460019457618955),
             ),
             children: [
               TileLayer(
@@ -74,7 +77,7 @@ setState(() {
               ),
               MarkerLayer(markers: [
                 Marker(
-                  point: const LatLng(36.14416597504649, -115.17591623962805),
+                  point: const LatLng(36.70482003977633, -4.460019457618955),
                   child: IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.location_on),
@@ -132,36 +135,38 @@ setState(() {
                       ],
                     ),
                     Container(
-  margin: const EdgeInsets.only(top: 16),
-  alignment: Alignment.centerRight,
-  child: ElevatedButton(
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => VistaTaller()),
-      );
-    },
-    style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Text(
-        'Ver Más',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-        ),
-      ),
-    ),
-  ),
-),
-
+                      margin: const EdgeInsets.only(top: 16),
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VistaTaller()),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.grey),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 16),
+                          child: Text(
+                            'Ver Más',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

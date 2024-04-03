@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/services/s_vista_taller.dart';
 import 'package:movil/pages/taller/registrar_taller.dart';
-import 'package:movil/pages/taller/vista_categorias_taller.dart'; // Importa la página VistaCategorias
+import 'package:movil/pages/taller/vista_categorias_taller.dart';
+import 'package:movil/pages/models/vista_taller.dart'; // Importa el servicio para obtener los datos del taller
 
-class VistaTaller extends StatelessWidget {
-  // Definir un controlador de texto para el campo de búsqueda
+class VistaTaller extends StatefulWidget {
+  @override
+  _VistaTallerState createState() => _VistaTallerState();
+}
+
+class _VistaTallerState extends State<VistaTaller> {
   final TextEditingController _searchController = TextEditingController();
+  late Future<List<VistaTallerService>> _talleresFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _talleresFuture = VistaVistaTallerServiceService.getVistaTallerServices();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +31,7 @@ class VistaTaller extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Image.asset(
-            'assets/logomovil.png',
+            'assets/logoetsa.png',
             width: 50,
             height: 50,
           ),
@@ -27,19 +40,17 @@ class VistaTaller extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Campo de búsqueda
           Container(
             color: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0), // Ajuste de margen
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             child: TextField(
-              controller: _searchController, // Asignar el controlador de texto
+              controller: _searchController,
               decoration: InputDecoration(
                 hintText: '',
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () {
-                    // Cerrar el teclado y borrar el texto del campo de búsqueda
                     _clearSearchField(context);
                   },
                 ),
@@ -54,57 +65,30 @@ class VistaTaller extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 5), // Espacio hacia abajo
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: FutureBuilder<List<VistaTallerService>>(
+              future: _talleresFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else {
+                  List<VistaTallerService>? talleres = snapshot.data;
+                  return SingleChildScrollView(
+                    child: Column(
                       children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento general', Colors.red, context),
-                        _buildSmallCard('assets/imgcateg3.png', 'Neumáticos y Ruedas', Colors.grey, context),
-                        _buildSmallCard('assets/imgcateg1.png', 'Lavado de autos', Colors.red, context),
+                        SizedBox(height: 5),
+                        ..._buildTallerCards(talleres, context),
+                        SizedBox(height: 20),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Reparación de frenos', Colors.grey, context),
-                        _buildSmallCard('assets/imgcateg3.png', 'Cambio de neumáticos', Colors.red, context),
-                        _buildSmallCard('assets/imgcateg1.png', 'Mantenimiento eléctrico', Colors.grey, context),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red, context),
-                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey, context),
-                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red, context),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 8.0), // Padding ajustado
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildSmallCard('assets/imgcateg1.png', 'Revisión de motor', Colors.red, context),
-                        _buildSmallCard('assets/imgcateg3.png', 'Reparación de transmisión', Colors.grey, context),
-                        _buildSmallCard('assets/imgcateg1.png', 'Limpieza de inyectores', Colors.red, context),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20), // Espacio hacia abajo
-                ],
-              ),
+                  );
+                }
+              },
             ),
           ),
         ],
@@ -116,53 +100,86 @@ class VistaTaller extends StatelessWidget {
     );
   }
 
-  // Función para construir las tarjetas
-  Widget _buildSmallCard(String imagePath, String title, Color color, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navega a la página VistaCategorias
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => VistaCategorias()),
-        );
-      },
-      child: Container(
-        width: 120.0, // Ajuste de ancho
-        height: 150.0, // Ajuste de alto
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              imagePath,
-              width: 80.0, // Tamaño de la imagen ajustado
-              height: 80.0, // Tamaño de la imagen ajustado
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              title,
-              style: TextStyle(color: Colors.white, fontSize: 12), // Tamaño de fuente ajustado
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+Widget _buildSmallCard(String imageUrl, String title, String ubicacion, String descripcion, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => VistaCategorias()),
+      );
+    },
+    child: Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 3,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
-    );
-  }
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 200.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              image: DecorationImage(
+                image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : AssetImage('assets/placeholder_image.jpg') as ImageProvider<Object>,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            title,
+            style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 5.0),
+          Text(
+            ubicacion,
+            style: TextStyle(color: Colors.grey, fontSize: 14.0),
+          ),
+          SizedBox(height: 5.0),
+          Text(
+            descripcion,
+            style: TextStyle(color: Colors.grey, fontSize: 14.0),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
-  // Función para cerrar el teclado y borrar el texto del campo de búsqueda
+
+List<Widget> _buildTallerCards(List<VistaTallerService>? talleres, BuildContext context) {
+  if (talleres != null && talleres.isNotEmpty) {
+    return talleres.map((taller) {
+      return _buildSmallCard(taller.fotoUrl, taller.nombre, taller.ubicacion, taller.descripcion, context);
+    }).toList();
+  } else {
+    return [
+      Center(
+        child: Text('No hay talleres disponibles.'),
+      )
+    ];
+  }
+}
+
+
   void _clearSearchField(BuildContext context) {
-    // Cerrar el teclado
     FocusScope.of(context).unfocus();
-    // Borrar el texto del campo de búsqueda
     _searchController.clear();
   }
 }
 
-// Clase del botón flotante
 class BotonFlotante extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -26,15 +26,16 @@ class _MapScreen2State extends State<MapScreen2> {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         listOfPoints = data['futures'][0]['geometry']['coordinates'];
-        points = listOfPoints.map((e) => LatLng(e[1].toDouble(), e[0].toDouble())).toList();
+        points = listOfPoints
+            .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
+            .toList();
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 205, 82, 69),
         centerTitle: true,
@@ -53,7 +54,7 @@ class _MapScreen2State extends State<MapScreen2> {
       body: FlutterMap(
           options: const MapOptions(
               initialZoom: 13,
-              initialCenter: LatLng(36.14416597504649, -115.17591623962805)),
+              initialCenter: LatLng(36.70482003977633, -4.460019457618955)),
           children: [
             TileLayer(
               urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -61,7 +62,7 @@ class _MapScreen2State extends State<MapScreen2> {
             ),
             MarkerLayer(markers: [
               Marker(
-                  point: const LatLng(36.14416597504649, -115.17591623962805),
+                  point: const LatLng(36.70482003977633, -4.460019457618955),
                   child: IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.location_on),
@@ -76,13 +77,14 @@ class _MapScreen2State extends State<MapScreen2> {
                     color: const Color.fromARGB(255, 158, 25, 20),
                     iconSize: 45,
                   ))
-            ]
-            ),
-
+            ]),
             PolylineLayer(
               polylineCulling: false,
               polylines: [
-                Polyline(points: points, color: const Color.fromARGB(66, 35, 51, 119), strokeWidth: 5),
+                Polyline(
+                    points: points,
+                    color: const Color.fromARGB(66, 35, 51, 119),
+                    strokeWidth: 5),
               ],
             )
           ]),

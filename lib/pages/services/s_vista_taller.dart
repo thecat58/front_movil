@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 // Servicio para realizar operaciones relacionadas con los servicios de vista de taller.
 class VistaVistaTallerServiceService {
-  static const String root = 'http://192.168.80.22:8000/api/taller/';
+  static const String root = 'http://192.168.137.1:8000/api/taller/';
   static const String getAllAction = 'GET_ALL';
 
   // Obtiene una lista de servicios de vista de taller del servidor.
