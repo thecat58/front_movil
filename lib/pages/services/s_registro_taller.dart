@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class TallerService {
-  static const ROOT = 'http://192.168.137.1:8000/api/taller/';
+  static const ROOT = 'http://192.168.80.18:8000/api/taller/';
   static const _GET_ALL_ACTION = 'GET_ALL';
   static const _ADD_EMP_ACTION = 'ADD_EMP';
   static const _UPDATE_EMP_ACTION = 'UPDATE_EMP';

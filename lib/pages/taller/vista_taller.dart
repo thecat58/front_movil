@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movil/pages/models/vista_taller.dart';
 import 'package:movil/pages/services/s_vista_taller.dart';
-import 'package:movil/pages/taller/registrar_taller.dart';
-import 'package:movil/pages/taller/vista_categorias_taller.dart';
-import 'package:movil/pages/models/vista_taller.dart'; // Importa el servicio para obtener los datos del taller
+import 'package:movil/pages/taller/registrar_taller.dart'; // Importa el servicio de taller
 
 class VistaTaller extends StatefulWidget {
   @override
@@ -11,12 +10,29 @@ class VistaTaller extends StatefulWidget {
 
 class _VistaTallerState extends State<VistaTaller> {
   final TextEditingController _searchController = TextEditingController();
-  late Future<List<VistaTallerService>> _talleresFuture;
+  late List<VistaTallerService> _talleres =
+      []; // Inicializamos con una lista vacía
 
   @override
   void initState() {
     super.initState();
-    _talleresFuture = VistaVistaTallerServiceService.getVistaTallerServices();
+    _loadTalleres();
+  }
+
+  Future<void> _loadTalleres() async {
+    try {
+      List<VistaTallerService> talleres =
+          await VistaVistaTallerServiceService.getVistaTallerServices();
+      setState(() {
+        _talleres = talleres;
+      });
+    } catch (e) {
+      print('Error al cargar talleres: $e');
+    }
+  }
+
+  Future<void> _refreshTalleres() async {
+    await _loadTalleres();
   }
 
   @override
@@ -37,76 +53,78 @@ class _VistaTallerState extends State<VistaTaller> {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: '',
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _clearSearchField(context);
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 205, 82, 69),
-                    width: 2.0,
+      body: RefreshIndicator(
+        onRefresh: _refreshTalleres,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: '',
+                  prefixIcon: Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      _clearSearchField(context);
+                    },
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 205, 82, 69),
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: FutureBuilder<List<VistaTallerService>>(
-              future: _talleresFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _talleres.length,
+                itemBuilder: (context, index) {
+                  final taller = _talleres[index];
+                  return _buildSmallCard(
+                    taller.fotoUrl,
+                    taller.nombre,
+                    taller.ubicacion,
+                    taller.descripcion,
+                    context,
+                    taller.id.toString(),
                   );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else {
-                  List<VistaTallerService>? talleres = snapshot.data;
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 5),
-                        ..._buildTallerCards(talleres, context),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  );
-                }
-              },
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 5.0),
-        child: BotonFlotante(),
+        child: FloatingActionButton(
+          backgroundColor: Color.fromARGB(255, 205, 82, 69),
+          onPressed: () {
+            // Navegar a la nueva página al hacer clic en el botón flotante
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SubirDatos()),
+            );
+          },
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
 
   Widget _buildSmallCard(String imageUrl, String title, String ubicacion,
-      String descripcion, BuildContext context) {
+      String descripcion, BuildContext context, String id) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VistaCategorias()),
+          MaterialPageRoute(builder: (context) => SubirDatos()),
         );
       },
       child: Container(
@@ -168,7 +186,8 @@ class _VistaTallerState extends State<VistaTaller> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Acción al presionar el botón "Actualizar"
+                    _updateTaller(id,
+                        context); // Llama a la función para actualizar el taller
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
@@ -182,7 +201,8 @@ class _VistaTallerState extends State<VistaTaller> {
                 SizedBox(width: 50), // Ajusta el espacio entre los botones
                 ElevatedButton(
                   onPressed: () {
-                    // Acción al presionar el botón "Eliminar"
+                    _deleteTaller(id,
+                        context); // Llama a la función para eliminar el taller
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white, // Color de fondo
@@ -200,41 +220,83 @@ class _VistaTallerState extends State<VistaTaller> {
     );
   }
 
-  List<Widget> _buildTallerCards(
-      List<VistaTallerService>? talleres, BuildContext context) {
-    if (talleres != null && talleres.isNotEmpty) {
-      return talleres.map((taller) {
-        return _buildSmallCard(taller.fotoUrl, taller.nombre, taller.ubicacion,
-            taller.descripcion, context);
-      }).toList();
-    } else {
-      return [
-        Center(
-          child: Text('No hay talleres disponibles.'),
-        )
-      ];
-    }
-  }
-
   void _clearSearchField(BuildContext context) {
     FocusScope.of(context).unfocus();
     _searchController.clear();
   }
+
+  void _updateTaller(String id, BuildContext context) {
+    // Lógica para actualizar el taller
+  }
+
+// Función para eliminar el taller
+  void _deleteTaller(String id, BuildContext context) async {
+    try {
+      bool confirmarEliminacion = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirmar eliminación'),
+            content: Text('¿Estás seguro de que quieres eliminar este taller?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // Cancelar la eliminación
+                },
+                child: Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  // Intentar eliminar el taller utilizando el servicio
+                  bool eliminado =
+                      await VistaVistaTallerServiceService.deleteTaller(id);
+                  Navigator.of(context).pop(
+                      eliminado); // Cerrar el diálogo y devolver el resultado
+                },
+                child: Text('Confirmar'),
+              ),
+            ],
+          );
+        },
+      );
+
+      // Mostrar un mensaje dependiendo del resultado de la eliminación
+      if (confirmarEliminacion != null && confirmarEliminacion) {
+        bool eliminado = await VistaVistaTallerServiceService.deleteTaller(id);
+        if (eliminado) {
+          // El taller se eliminó correctamente
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('El taller se eliminó correctamente'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          await _refreshTalleres(); // Actualizar lista de talleres
+        } else {
+          // Ocurrió un error al eliminar el taller
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Ocurrió un error al eliminar el taller'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      print('Error al eliminar taller: $e');
+    }
+  }
+
+// Función para actualizar la lista de talleres después de eliminar uno
+  // Future<void> _refreshTalleres() async {
+  //   setState(() {
+  //     _talleresFuture = VistaVistaTallerServiceService.getVistaTallerServices();
+  //   });
+  // }
 }
 
-class BotonFlotante extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: Color.fromARGB(255, 205, 82, 69),
-      onPressed: () {
-        // Navegar a la nueva página al hacer clic en el botón flotante
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SubirDatos()),
-        );
-      },
-      child: Icon(Icons.add),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    home: VistaTaller(),
+  ));
 }
