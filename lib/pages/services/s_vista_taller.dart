@@ -1,20 +1,16 @@
-import 'package:movil/pages/models/vista_taller.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:movil/pages/models/vista_taller.dart';
 
-// Servicio para realizar operaciones relacionadas con los servicios de vista de taller.
 class VistaVistaTallerServiceService {
-  static const String root = 'http://192.168.80.18:8000/api/taller/';
+  static const String root = 'http://192.168.137.70:8000/api/taller/';
   static const String getAllAction = 'GET_ALL';
-  static const String updateEmpAction = 'UPDATE_EMP';
+  static const String _updateTallerAction = "update_taller";
   static const String deleteEmpAction = 'DELETE_EMP';
 
-  // Obtiene una lista de servicios de vista de taller del servidor.
   static Future<List<VistaTallerService>> getVistaTallerServices() async {
     try {
-      final response = await http.get(Uri.parse(
-          '$root?action=$getAllAction')); // Utilización de interpolación de cadenas
+      final response = await http.get(Uri.parse('$root?action=$getAllAction'));
       if (response.statusCode == 200) {
         List<VistaTallerService> list = parseResponse(response.body);
         return list;
@@ -26,8 +22,6 @@ class VistaVistaTallerServiceService {
     }
   }
 
-  // Parsea la respuesta del servidor y la convierte en una lista de [VistaTallerService].
-  // El parámetro [responseBody] es la respuesta del servidor en formato JSON.
   static List<VistaTallerService> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody);
     return parsed
@@ -35,26 +29,36 @@ class VistaVistaTallerServiceService {
         .toList();
   }
 
-// Actualiza un taller en el servidor por su ID.
-  static Future<bool> updateTaller(VistaTallerService taller) async {
+  static Future<bool> actualizarTaller(String tallerId, String nombre,
+      String ubicacion, String descripcion, String fotoUrl) async {
     try {
-      var request =
-          http.MultipartRequest('PUT', Uri.parse('$root${taller.id}/'));
-      request.fields['action'] = updateEmpAction;
-      request.fields['nombre'] = taller.nombre;
-      request.fields['ubicacion'] = taller.ubicacion;
-      request.fields['descripcion'] = taller.descripcion;
+      var map = {
+        'action': _updateTallerAction,
+        'id': tallerId,
+        'nombre': nombre,
+        'ubicacion': ubicacion,
+        'descripcion': descripcion,
+        'fotoUrl': fotoUrl,
+      };
 
-      // Si la fotoUrl no está vacía, puedes enviarla al servidor
-      if (taller.fotoUrl.isNotEmpty) {
-        // Aquí puedes implementar la lógica para cargar la imagen desde la URL y enviarla al servidor
+      final url = '$root$tallerId/';
+      print('URL de la solicitud PUT: $url');
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(map),
+      );
+
+      print('actualizarTaller Response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
       }
-
-      var response = await request.send();
-      return response.statusCode == 200;
     } catch (e) {
-      print('Error al actualizar el taller: $e');
-      return false; // Maneja el error devolviendo false
+      print('Error al actualizar taller: $e');
+      return false;
     }
   }
 

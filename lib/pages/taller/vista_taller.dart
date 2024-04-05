@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:movil/pages/models/vista_taller.dart';
 import 'package:movil/pages/services/s_vista_taller.dart';
-import 'package:movil/pages/taller/registrar_taller.dart'; // Importa el servicio de taller
 
 class VistaTaller extends StatefulWidget {
   @override
@@ -9,9 +12,9 @@ class VistaTaller extends StatefulWidget {
 }
 
 class _VistaTallerState extends State<VistaTaller> {
-  final TextEditingController _searchController = TextEditingController();
-  late List<VistaTallerService> _talleres =
-      []; // Inicializamos con una lista vacía
+  TextEditingController _searchController = TextEditingController();
+
+  List<VistaTallerService> _talleres = [];
 
   @override
   void initState() {
@@ -94,6 +97,7 @@ class _VistaTallerState extends State<VistaTaller> {
                     taller.descripcion,
                     context,
                     taller.id.toString(),
+                    taller,
                   );
                 },
               ),
@@ -106,11 +110,8 @@ class _VistaTallerState extends State<VistaTaller> {
         child: FloatingActionButton(
           backgroundColor: Color.fromARGB(255, 205, 82, 69),
           onPressed: () {
-            // Navegar a la nueva página al hacer clic en el botón flotante
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SubirDatos()),
-            );
+            // Abre la pantalla de subir datos pasando el primer taller de la lista
+            _showUpdateDialog(context, _talleres.first);
           },
           child: Icon(Icons.add),
         ),
@@ -118,14 +119,19 @@ class _VistaTallerState extends State<VistaTaller> {
     );
   }
 
-  Widget _buildSmallCard(String imageUrl, String title, String ubicacion,
-      String descripcion, BuildContext context, String id) {
+  Widget _buildSmallCard(
+    String imageUrl,
+    String title,
+    String ubicacion,
+    String descripcion,
+    BuildContext context,
+    String id,
+    VistaTallerService taller,
+  ) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SubirDatos()),
-        );
+        // Abre la pantalla de edición y pasa el objeto del taller
+        _showUpdateDialog(context, taller);
       },
       child: Container(
         width: double.infinity,
@@ -181,35 +187,31 @@ class _VistaTallerState extends State<VistaTaller> {
             ),
             SizedBox(height: 10.0),
             Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .center, // Alinea los botones hacia el centro
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    _updateTaller(id,
-                        context); // Llama a la función para actualizar el taller
+                    _showUpdateDialog(context, taller);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Color.fromARGB(255, 205, 82, 69), // Color de fondo
+                    backgroundColor: Color.fromARGB(255, 205, 82, 69),
                   ),
                   child: Text(
                     'Actualizar',
-                    style: TextStyle(color: Colors.black), // Color del texto
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
-                SizedBox(width: 50), // Ajusta el espacio entre los botones
+                SizedBox(width: 50),
                 ElevatedButton(
                   onPressed: () {
-                    _deleteTaller(id,
-                        context); // Llama a la función para eliminar el taller
+                    _deleteTaller(id, context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // Color de fondo
+                    backgroundColor: Colors.white,
                   ),
                   child: Text(
                     'Eliminar',
-                    style: TextStyle(color: Colors.black), // Color del texto
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ],
@@ -225,11 +227,6 @@ class _VistaTallerState extends State<VistaTaller> {
     _searchController.clear();
   }
 
-  void _updateTaller(String id, BuildContext context) {
-    // Lógica para actualizar el taller
-  }
-
-// Función para eliminar el taller
   void _deleteTaller(String id, BuildContext context) async {
     try {
       bool confirmarEliminacion = await showDialog(
@@ -241,17 +238,15 @@ class _VistaTallerState extends State<VistaTaller> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(false); // Cancelar la eliminación
+                  Navigator.of(context).pop(false);
                 },
                 child: Text('Cancelar'),
               ),
               TextButton(
                 onPressed: () async {
-                  // Intentar eliminar el taller utilizando el servicio
                   bool eliminado =
                       await VistaVistaTallerServiceService.deleteTaller(id);
-                  Navigator.of(context).pop(
-                      eliminado); // Cerrar el diálogo y devolver el resultado
+                  Navigator.of(context).pop(eliminado);
                 },
                 child: Text('Confirmar'),
               ),
@@ -260,20 +255,17 @@ class _VistaTallerState extends State<VistaTaller> {
         },
       );
 
-      // Mostrar un mensaje dependiendo del resultado de la eliminación
       if (confirmarEliminacion != null && confirmarEliminacion) {
         bool eliminado = await VistaVistaTallerServiceService.deleteTaller(id);
         if (eliminado) {
-          // El taller se eliminó correctamente
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('El taller se eliminó correctamente'),
               duration: Duration(seconds: 2),
             ),
           );
-          await _refreshTalleres(); // Actualizar lista de talleres
+          await _refreshTalleres();
         } else {
-          // Ocurrió un error al eliminar el taller
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Ocurrió un error al eliminar el taller'),
@@ -287,12 +279,106 @@ class _VistaTallerState extends State<VistaTaller> {
     }
   }
 
-// Función para actualizar la lista de talleres después de eliminar uno
-  // Future<void> _refreshTalleres() async {
-  //   setState(() {
-  //     _talleresFuture = VistaVistaTallerServiceService.getVistaTallerServices();
-  //   });
-  // }
+  void _showUpdateDialog(BuildContext context, VistaTallerService taller) {
+    TextEditingController nombreController =
+        TextEditingController(text: taller.nombre ?? '');
+    TextEditingController ubicacionController =
+        TextEditingController(text: taller.ubicacion ?? '');
+    TextEditingController descripcionController =
+        TextEditingController(text: taller.descripcion ?? '');
+
+    File? _image;
+
+    Future<void> _pickImage() async {
+      final pickedImage =
+          await ImagePicker().getImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        setState(() {
+          _image = File(pickedImage.path);
+        });
+      }
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Actualizar Taller'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: Text('Seleccionar imagen'),
+              ),
+              TextField(
+                controller: nombreController,
+                decoration: InputDecoration(labelText: 'Nombre'),
+              ),
+              TextField(
+                controller: ubicacionController,
+                decoration: InputDecoration(labelText: 'Ubicación'),
+              ),
+              TextField(
+                controller: descripcionController,
+                decoration: InputDecoration(labelText: 'Descripción'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                String imageUrl = taller.fotoUrl ?? '';
+                if (_image != null) {
+                  imageUrl = await _uploadImageToServer(_image!);
+                }
+                bool actualizado =
+                    await VistaVistaTallerServiceService.actualizarTaller(
+                  taller.id.toString(),
+                  nombreController.text,
+                  ubicacionController.text,
+                  descripcionController.text,
+                  imageUrl,
+                );
+                if (actualizado) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('El taller se actualizó correctamente'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  await _refreshTalleres();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          'Ocurrió un error al actualizar el taller'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.of(context).pop();
+              },
+              child: Text('Guardar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String> _uploadImageToServer(File imageFile) async {
+    // Lógica para subir la imagen al servidor y obtener la URL
+    // Implementa tu lógica de subida de imagen aquí
+    return ''; // URL de ejemplo
+  }
 }
 
 void main() {

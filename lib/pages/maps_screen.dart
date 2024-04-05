@@ -25,32 +25,32 @@ class _MapScreenState extends State<MapScreen> {
       isFetchingData = true; // Iniciando la carga de datos
     });
 
-    var response = await http.get(getRouteUrl(
-        "-4.460019457618955,36.70482003977633 ",
-        "-4.460019457618955,36.70482003977633 "));
+    // var response = await http.get(getRouteUrl(
+    //     "-4.460019457618955,36.70482003977633 ",
+    //     "-4.460019457618955,36.70482003977633 "));
 
-    setState(() {
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        if (data != null &&
-            data['futures'] != null &&
-            data['futures'].isNotEmpty &&
-            data['futures'][0]['geometry'] != null &&
-            data['futures'][0]['geometry']['coordinates'] != null) {
-          listOfPoints = data['futures'][0]['geometry']['coordinates'];
-          points = listOfPoints
-              .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
-              .toList();
-        } else {
-          // La respuesta no contiene los datos esperados
-          // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
-        }
-      } else {
-        // La solicitud HTTP no tuvo éxito
-        // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
-      }
-      isFetchingData = false; // Finalizando la carga de datos
-    });
+    // setState(() {
+    //   if (response.statusCode == 200) {
+    //     var data = jsonDecode(response.body);
+    //     if (data != null &&
+    //         data['futures'] != null &&
+    //         data['futures'].isNotEmpty &&
+    //         data['futures'][0]['geometry'] != null &&
+    //         data['futures'][0]['geometry']['coordinates'] != null) {
+    //       listOfPoints = data['futures'][0]['geometry']['coordinates'];
+    //       points = listOfPoints
+    //           .map((e) => LatLng(e[1].toDouble(), e[0].toDouble()))
+    //           .toList();
+    //     } else {
+    //       // La respuesta no contiene los datos esperados
+    //       // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
+    //     }
+    //   } else {
+    //     // La solicitud HTTP no tuvo éxito
+    //     // Puedes mostrar un mensaje de error o tomar alguna acción adecuada
+    //   }
+    //   isFetchingData = false; // Finalizando la carga de datos
+    // });
   }
 
   @override

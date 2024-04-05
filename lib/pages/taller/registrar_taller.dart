@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:movil/pages/mapa_taller.dart';
+import 'package:movil/pages/models/vista_taller.dart';
 import 'package:movil/pages/services/s_registro_taller.dart';
-import 'dart:io'; // Importa dart:io para usar la clase File
-import 'package:http/http.dart' as http;
-import 'SocialIcons.dart'; // Importa el archivo con los iconos sociales
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'SocialIcons.dart';
+import 'package:movil/pages/mapa_taller.dart';
 
 class SubirDatos extends StatefulWidget {
-  const SubirDatos({Key? key}) : super(key: key);
+  final VistaTallerService taller; // Agregar parámetro taller
+
+  const SubirDatos({Key? key, required this.taller}) : super(key: key);
 
   @override
   _SubirDatosState createState() => _SubirDatosState();
@@ -18,7 +20,7 @@ class _SubirDatosState extends State<SubirDatos> {
   TextEditingController _direccionController = TextEditingController();
   TextEditingController _descripcionController = TextEditingController();
 
-  File? imagenFile; // Declara imagenFile como un objeto File nullable
+  File? imagenFile;
 
   @override
   void dispose() {
@@ -53,9 +55,8 @@ class _SubirDatosState extends State<SubirDatos> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Limpiar los campos de texto y la imagen al retroceder
             _limpiarCampos();
-            Navigator.of(context).pop(); // Cerrar el diálogo de éxito
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -72,22 +73,17 @@ class _SubirDatosState extends State<SubirDatos> {
               SizedBox(height: 8.0),
               InkWell(
                 onTap: () async {
-                  // Función para manejar la selección de imagen
-                  print('Botón de subir imagen presionado');
-                  // Llama a la función para seleccionar una imagen
                   final picker = ImagePicker();
                   final pickedFile =
                       await picker.getImage(source: ImageSource.gallery);
 
                   if (pickedFile != null) {
-                    // Si se selecciona una imagen, crea un objeto File
                     setState(() {
                       imagenFile = File(pickedFile.path);
                       print(
                           'Ruta de la imagen seleccionada: ${pickedFile.path}');
                     });
                   } else {
-                    // Si no se selecciona ninguna imagen, muestra una alerta
                     print('No se seleccionó ninguna imagen.');
                     showDialog(
                       context: context,
@@ -162,13 +158,10 @@ class _SubirDatosState extends State<SubirDatos> {
                         'Descripción del taller', Icons.description,
                         controller: _descripcionController),
                     SizedBox(height: 16.0),
-                    // Aquí colocamos los iconos sociales
                     SocialIconsRow(),
                     SizedBox(height: 16),
                     InkWell(
                       onTap: () {
-                        // Navegar
-                        // Navegar a la página MapScreen2
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -185,7 +178,7 @@ class _SubirDatosState extends State<SubirDatos> {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Dirección del taller', // Aquí colocas la dirección del taller
+                            'Dirección del taller',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -205,32 +198,26 @@ class _SubirDatosState extends State<SubirDatos> {
         padding: EdgeInsets.only(right: 5.0, bottom: 1),
         child: FloatingActionButton.extended(
           onPressed: () async {
-            // Acción al presionar el botón de guardar cambios
             print('Guardar cambios');
-            // Verifica si imagenFile no es nulo
             if (imagenFile != null) {
-              // Llamar al servicio para registrar el taller
               bool registrado = await TallerService.addTallers(
-                imagenFile!, // Usa ! para asegurarte de que no sea nulo
+                imagenFile!,
                 _nombreController.text,
                 _direccionController.text,
                 _descripcionController.text,
               );
 
               if (registrado) {
-                // Mostrar un mensaje de éxito en el dispositivo
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Datos enviados correctamente.'),
-                    backgroundColor: Colors.green, // Color de fondo del mensaje
-                    duration: Duration(seconds: 5), // Duración
+                    backgroundColor: Colors.green,
+                    duration: Duration(seconds: 5),
                   ),
                 );
 
-                // Limpiar los campos
                 _limpiarCampos();
               } else {
-                // Mostrar un mensaje de error
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Hubo un error al registrar el taller.'),
@@ -239,7 +226,6 @@ class _SubirDatosState extends State<SubirDatos> {
                 );
               }
             } else {
-              // Mostrar un mensaje de error si imagenFile es nulo
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Debes seleccionar una imagen del taller.'),
