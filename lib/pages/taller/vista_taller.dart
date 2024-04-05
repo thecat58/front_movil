@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movil/pages/models/vista_taller.dart';
 import 'package:movil/pages/services/s_vista_taller.dart';
+import 'package:movil/pages/taller/registrar_taller.dart';
 
 class VistaTaller extends StatefulWidget {
   @override
@@ -105,16 +104,17 @@ class _VistaTallerState extends State<VistaTaller> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 5.0),
-        child: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 205, 82, 69),
-          onPressed: () {
-            // Abre la pantalla de subir datos pasando el primer taller de la lista
-            _showUpdateDialog(context, _talleres.first);
-          },
-          child: Icon(Icons.add),
-        ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 205, 82, 69),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SubirDatos(), 
+            ),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -130,7 +130,6 @@ class _VistaTallerState extends State<VistaTaller> {
   ) {
     return GestureDetector(
       onTap: () {
-        // Abre la pantalla de edición y pasa el objeto del taller
         _showUpdateDialog(context, taller);
       },
       child: Container(
@@ -357,8 +356,7 @@ class _VistaTallerState extends State<VistaTaller> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(
-                          'Ocurrió un error al actualizar el taller'),
+                      content: Text('Ocurrió un error al actualizar el taller'),
                       duration: Duration(seconds: 2),
                     ),
                   );
