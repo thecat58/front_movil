@@ -1,0 +1,4 @@
+#Fri Apr 05 17:28:28 COT 2024
+base.0=D\:\\SIGUIENTE\\Sena 2024\\front_movil\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
