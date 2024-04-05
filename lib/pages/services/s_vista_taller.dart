@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:movil/pages/models/vista_taller.dart';
 
 class VistaVistaTallerServiceService {
-  static const String root = 'http://192.168.80.18:8000/api/taller/';
+  static const String root = 'http://192.168.137.74:8000/api/taller/';
   static const String getAllAction = 'GET_ALL';
   static const String _updateTallerAction = "update_taller";
   static const String deleteEmpAction = 'DELETE_EMP';
