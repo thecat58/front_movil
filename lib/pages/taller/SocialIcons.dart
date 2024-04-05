@@ -8,58 +8,51 @@ class SocialIconsRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-            icon: Image.asset(
-              'assets/facebook.png',
-              width: 40,
-              height: 40,
-            ),
-            onPressed: () {
-              // Acción al presionar el botón de Instagram
-              _launchURL('https://www.facebook.com/');
-
-            },
+          icon: Image.asset(
+            'assets/facebook.png',
+            width: 40,
+            height: 40,
           ),
-        SizedBox(width: 10),
-        Flexible(
-          child: IconButton(
-            icon: Image.asset(
-              'assets/instagram_icon.png',
-              width: 40,
-              height: 40,
-            ),
-            onPressed: () {
-              // Acción al presionar el botón de Instagram
-              print('Abrir enlace de Instagram');
-            },
-          ),
+          onPressed: () {
+            // Acción al presionar el botón de Facebook
+            _launchURL('https://www.facebook.com/');
+          },
         ),
         SizedBox(width: 10),
-        Flexible(
-          child: IconButton(
-            icon: Image.asset(
-              'assets/whatsapp96.png',
-              width: 40,
-              height: 40,
-            ),
-            onPressed: () {
-              // Acción al presionar el botón de WhatsApp
-              print('Abrir enlace de WhatsApp');
-            },
+        IconButton(
+          icon: Image.asset(
+            'assets/instagram_icon.png',
+            width: 40,
+            height: 40,
           ),
+          onPressed: () {
+            // Acción al presionar el botón de Instagram
+            _launchURL('https://www.instagram.com/');
+          },
         ),
         SizedBox(width: 10),
-        Flexible(
-          child: IconButton(
-            icon: Image.asset(
-              'assets/tiktok.png',
-              width: 40,
-              height: 40,
-            ),
-            onPressed: () {
-              // Acción al presionar el botón de TikTok
-              print('Abrir enlace de TikTok');
-            },
+        IconButton(
+          icon: Image.asset(
+            'assets/whatsapp96.png',
+            width: 40,
+            height: 40,
           ),
+          onPressed: () {
+            // Acción al presionar el botón de WhatsApp
+            _launchURL('https://wa.me/');
+          },
+        ),
+        SizedBox(width: 10),
+        IconButton(
+          icon: Image.asset(
+            'assets/tiktok.png',
+            width: 40,
+            height: 40,
+          ),
+          onPressed: () {
+            // Acción al presionar el botón de TikTok
+            _launchURL('https://www.tiktok.com/');
+          },
         ),
       ],
     );
@@ -67,10 +60,10 @@ class SocialIconsRow extends StatelessWidget {
 
   // Función para abrir enlaces utilizando url_launcher
   void _launchURL(String url) async {
-    if (await canLaunch(url)) {
+    try {
       await launch(url);
-    } else {
-      print('No se pudo abrir el enlace $url');
+    } catch (e) {
+      print('No se pudo abrir el enlace $url: $e');
     }
   }
 }

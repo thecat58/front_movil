@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movil/pages/mapa_taller.dart';
 import 'package:movil/pages/services/s_registro_taller.dart';
-import 'dart:io'; // Importa dart:io para usar la clase File
+import 'dart:io';
+
+import 'package:movil/pages/taller/SocialIcons.dart'; // Importa dart:io para usar la clase File
 
 void main() => runApp(const SubirDatos());
 
@@ -154,6 +156,7 @@ class _SubirDatosScreenState extends State<SubirDatosScreen> {
                         ),
                       ),
                       SizedBox(height: 8.0),
+                      SocialIconsRow(), // Agrega la clase SocialIconsRow
                       SizedBox(height: 16.0),
                       InkWell(
                         onTap: () {
